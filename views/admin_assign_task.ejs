@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Assign Task - REACT</title>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+
+body{
+font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+background:#f5f6f8;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/* HEADER */
+header{
+background:linear-gradient(135deg,#667eea,#764ba2);
+padding:0.5rem 0;
+box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+nav{
+max-width:1200px;
+margin:auto;
+display:flex;
+align-items:center;
+padding:10px 20px;
+}
+
+.logo{
+font-size:1.5rem;
+font-weight:bold;
+color:#f2f4f7;
+}
+
+.nav-links{
+margin-left:auto;
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+font-weight:500;
+font-size:16px;
+}
+
+/* PAGE TITLE */
+.page-title{
+text-align:center;
+margin-top:50px;
+color:#2c5aa0;
+}
+
+/* FORM CONTAINER */
+.container{
+max-width:600px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:14px;
+box-shadow:0 6px 32px rgba(102,126,234,0.2);
+}
+
+/* FORM STYLING */
+
+form{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+label{
+font-weight:600;
+color:#444;
+}
+
+select,input,textarea{
+padding:10px;
+border:1px solid #ddd;
+border-radius:6px;
+font-size:14px;
+}
+
+textarea{
+resize:none;
+height:100px;
+}
+
+button{
+margin-top:10px;
+padding:12px;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+border:none;
+border-radius:8px;
+font-size:15px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+/* FOOTER */
+
+footer{
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:#f2f4f7;
+text-align:center;
+padding:20px 0;
+margin-top:60px;
+font-size:13px;
+}
+
+.main-content{
+flex:1;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+<div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+<ul class="nav-links">
+<li><a href="/">Home</a></li>
+<li><a href="/admin">Dashboard</a></li>
+<li><a href="/admin/volunteers">Volunteers</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
+
+</nav>
+</header>
+
+<main class="main-content">
+
+<h1 class="page-title">Assign Task to Volunteer</h1>
+
+<div class="container">
+
+<form action="/admin/assign-task" method="POST">
+
+<label>Select Volunteer</label>
+
+<select name="volunteerId" required>
+
+<% volunteers.forEach(v => { %>
+
+<option value="<%= v._id %>">
+<%= v.fullName %>
+</option>
+
+<% }) %>
+
+</select>
+
+<label>Task Title</label>
+
+<input type="text" name="taskTitle" placeholder="Enter task title" required>
+
+<label>Description</label>
+
+<textarea name="taskDescription" placeholder="Enter task description"></textarea>
+
+<button type="submit">Assign Task</button>
+
+</form>
+
+</div>
+
+</main>
+
+<footer>
+© 2026 REACT | Admin Task Assignment
+</footer>
+
+</body>
+</html>

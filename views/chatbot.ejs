@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>REACT Chatbot</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #2c5aa0;
+        --blue-light: #4472c4;
+        --purple: #764ba2;
+        --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --white: #ffffff;
+        --grey-bg: #f4f6fb;
+        --grey-text: #888;
+        --shadow: 0 20px 60px rgba(44, 90, 160, 0.18);
+      }
+
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: transparent;
+      }
+
+
+      #chatToggle {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        background: var(--gradient);
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 28px rgba(102, 126, 234, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+      #chatToggle:hover {
+        transform: scale(1.08);
+        box-shadow: 0 12px 36px rgba(102, 126, 234, 0.55);
+      }
+      #chatToggle svg {
+        width: 34px;
+        height: 34px;
+        transition: transform 0.3s;
+      }
+      #chatToggle.open svg {
+        transform: rotate(15deg) scale(0.88);
+      }
+      #chatToggle::after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 12px;
+        height: 12px;
+        background: #ff4d6d;
+        border-radius: 50%;
+        border: 2px solid white;
+        animation: pulse 2s infinite;
+      }
+      #chatToggle.open::after {
+        display: none;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.3);
+          opacity: 0.7;
+        }
+      }
+
+
+      #chatWindow {
+        position: fixed;
+        bottom: 104px;
+        right: 28px;
+        width: 420px;
+        max-height: 660px;
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 9998;
+        transform: scale(0.85) translateY(20px);
+        opacity: 0;
+        pointer-events: none;
+        transform-origin: bottom right;
+        transition:
+          transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+          opacity 0.25s;
+      }
+      #chatWindow.open {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        pointer-events: all;
+      }
+
+
+      .chat-header {
+        background: var(--gradient);
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+      .chat-avatar {
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .chat-avatar svg {
+        width: 28px;
+        height: 28px;
+      }
+      .chat-header-info h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        color: white;
+        letter-spacing: 0.3px;
+      }
+      .chat-header-info span {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.75);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .online-dot {
+        width: 7px;
+        height: 7px;
+        background: #6effc5;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+
+      #chatMessages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 18px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        scroll-behavior: smooth;
+      }
+      #chatMessages::-webkit-scrollbar {
+        width: 4px;
+      }
+      #chatMessages::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 4px;
+      }
+
+
+      .msg {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        animation: fadeUp 0.3s ease forwards;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .msg.bot {
+        align-self: flex-start;
+      }
+      .msg.user {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+
+      .msg-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .msg-avatar svg {
+        width: 20px;
+        height: 20px;
+      }
+
+
+      .msg-bubble {
+        max-width: 280px;
+        padding: 11px 14px;
+        border-radius: 16px;
+        font-size: 0.875rem;
+        line-height: 1.55;
+      }
+      .msg.bot .msg-bubble {
+        background: var(--grey-bg);
+        color: #333;
+        border-bottom-left-radius: 4px;
+      }
+      .msg.user .msg-bubble {
+        background: var(--gradient);
+        color: white;
+        border-bottom-right-radius: 4px;
+      }
+
+
+      .typing .msg-bubble {
+        padding: 14px 16px;
+      }
+      .typing-dots {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+      .typing-dots span {
+        width: 7px;
+        height: 7px;
+        background: #aaa;
+        border-radius: 50%;
+        animation: bounce 1.2s infinite;
+      }
+      .typing-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes bounce {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-6px);
+        }
+      }
+
+
+      #quickQuestions {
+        padding: 8px 16px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        flex-shrink: 0;
+        border-top: 1px solid #f0f2f8;
+        max-height: 260px;
+        overflow-y: auto;
+      }
+      #quickQuestions::-webkit-scrollbar {
+        width: 4px;
+      }
+      #quickQuestions::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 4px;
+      }
+      #quickQuestions.hidden {
+        display: none;
+      }
+      #quickQuestions p {
+        font-size: 0.72rem;
+        color: var(--grey-text);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 2px;
+        padding-top: 4px;
+      }
+      .q-btn {
+        background: var(--grey-bg);
+        border: 1.5px solid #e8ecf4;
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        font-family: "DM Sans", sans-serif;
+        color: var(--blue);
+        cursor: pointer;
+        text-align: left;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.15s;
+        font-weight: 500;
+      }
+      .q-btn:hover {
+        background: #eaeefc;
+        border-color: var(--blue-light);
+        transform: translateX(3px);
+      }
+
+
+      #showQuestionsBtn {
+        margin: 0 16px 8px;
+        background: none;
+        border: 1.5px dashed #c0cae8;
+        border-radius: 10px;
+        padding: 7px 12px;
+        font-size: 0.78rem;
+        font-family: "DM Sans", sans-serif;
+        color: var(--blue);
+        cursor: pointer;
+        text-align: center;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+        font-weight: 500;
+        display: none;
+        flex-shrink: 0;
+      }
+      #showQuestionsBtn:hover {
+        background: #eaeefc;
+        border-color: var(--blue-light);
+      }
+      #showQuestionsBtn.visible {
+        display: block;
+      }
+
+
+      .chat-input-area {
+        padding: 12px 14px 16px;
+        border-top: 1px solid #f0f2f8;
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      #chatInput {
+        flex: 1;
+        border: 1.5px solid #e0e5f0;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-size: 0.875rem;
+        font-family: "DM Sans", sans-serif;
+        outline: none;
+        color: #333;
+        transition: border-color 0.2s;
+        background: var(--grey-bg);
+      }
+      #chatInput:focus {
+        border-color: var(--blue-light);
+        background: white;
+      }
+      #chatInput::placeholder {
+        color: #bbb;
+      }
+
+
+      #sendBtn {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--gradient);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        flex-shrink: 0;
+      }
+      #sendBtn:hover {
+        transform: scale(1.07);
+        box-shadow: 0 4px 14px rgba(102, 126, 234, 0.4);
+      }
+      #sendBtn svg {
+        width: 18px;
+        height: 18px;
+        fill: white;
+      }
+
+
+      @media (max-width: 460px) {
+        #chatWindow {
+          width: calc(100vw - 20px);
+          right: 10px;
+          bottom: 90px;
+        }
+        #chatToggle {
+          bottom: 18px;
+          right: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button id="chatToggle" onclick="toggleChat()" aria-label="Open chat">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line
+          x1="32"
+          y1="3"
+          x2="32"
+          y2="13"
+          stroke="white"
+          stroke-width="3.5"
+          stroke-linecap="round"
+        />
+        <circle cx="32" cy="3" r="3.5" fill="white" />
+        <rect x="11" y="13" width="42" height="28" rx="7" fill="white" />
+        <rect x="17" y="21" width="10" height="10" rx="3" fill="#667eea" />
+        <circle cx="22" cy="26" r="3" fill="white" />
+        <rect x="37" y="21" width="10" height="10" rx="3" fill="#667eea" />
+        <circle cx="42" cy="26" r="3" fill="white" />
+        <rect x="20" y="35" width="24" height="4" rx="2" fill="#9b7fd4" />
+        <rect x="6" y="22" width="5" height="10" rx="2.5" fill="white" />
+        <rect x="53" y="22" width="5" height="10" rx="2.5" fill="white" />
+        <rect x="16" y="43" width="32" height="17" rx="6" fill="white" />
+        <circle cx="25" cy="52" r="4" fill="#667eea" />
+        <circle cx="39" cy="52" r="4" fill="#9b7fd4" />
+        <rect x="30" y="48" width="4" height="8" rx="2" fill="#c4b0ec" />
+      </svg>
+    </button>
+
+
+    <div id="chatWindow">
+      <div class="chat-header">
+        <div class="chat-avatar">
+          <svg
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line
+              x1="32"
+              y1="3"
+              x2="32"
+              y2="13"
+              stroke="white"
+              stroke-width="3.5"
+              stroke-linecap="round"
+            />
+            <circle cx="32" cy="3" r="3.5" fill="white" />
+            <rect x="11" y="13" width="42" height="28" rx="7" fill="white" />
+            <rect x="17" y="21" width="10" height="10" rx="3" fill="#667eea" />
+            <circle cx="22" cy="26" r="3" fill="white" />
+            <rect x="37" y="21" width="10" height="10" rx="3" fill="#667eea" />
+            <circle cx="42" cy="26" r="3" fill="white" />
+            <rect x="20" y="35" width="24" height="4" rx="2" fill="#9b7fd4" />
+            <rect x="6" y="22" width="5" height="10" rx="2.5" fill="white" />
+            <rect x="53" y="22" width="5" height="10" rx="2.5" fill="white" />
+            <rect x="16" y="43" width="32" height="17" rx="6" fill="white" />
+            <circle cx="25" cy="52" r="4" fill="#667eea" />
+            <circle cx="39" cy="52" r="4" fill="#9b7fd4" />
+            <rect x="30" y="48" width="4" height="8" rx="2" fill="#c4b0ec" />
+          </svg>
+        </div>
+        <div class="chat-header-info">
+          <h3>REACT Assistant</h3>
+          <span
+            ><span class="online-dot"></span> Online · Resource Education &
+            Charitable Trust</span
+          >
+        </div>
+      </div>
+
+
+      <div id="chatMessages"></div>
+
+
+      <button id="showQuestionsBtn" onclick="toggleQuickQuestions()">
+        💬 Show quick questions
+      </button>
+
+
+      <div id="quickQuestions">
+        <p>Quick Questions</p>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What does your organization do?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What support do you provide to people?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What kind of skill training and employment support do you provide for
+          PWD?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          How long do the training programs last?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          Do you provide accommodation for participants during the training
+          program?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          Do you provide any materials during the training?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What services do you provide?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What support is provided for educational institutions?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What types of disabilities does REACT support?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          Does REACT provide job placement support?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          How many employers does REACT work with?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          Which districts do you provide job placement in?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What types of jobs do you provide?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What salary range can candidates expect?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          What support do you provide to start a business or for
+          self-employment?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          Can we apply for a loan without training?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          How long will it take to process the loan?
+        </button>
+        <button class="q-btn" onclick="askQuestion(this)">
+          How much loan amount can we apply for?
+        </button>
+      </div>
+
+
+      <div class="chat-input-area">
+        <input
+          id="chatInput"
+          type="text"
+          placeholder="Type your message…"
+          onkeydown="if (event.key === 'Enter') sendMessage();"
+        />
+        <button id="sendBtn" onclick="sendMessage()" aria-label="Send">
+          <svg viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+
+    <script>
+      const kb = {
+        "what does your organization do": `Our organization supports Persons with Disabilities (PWD) through Scholarship for college, training for Placement, Career Guidance, and job opportunities.`,
+
+
+        "what support do you provide to people": `We provide skill Training based on their Education Qualification, their skillset and have them job according to the industry/ sector in which their Interest aligns.`,
+
+
+        "what kind of skill training and employment support do you provide for pwd": `We provide training in various aspects such as Digital Literacy, Soft Skills, Basic IT Training (only applicable if candidates are from CS Background), Communication as well as Interview Skills. At the moment we have also started coaching for Bank Exams for candidates who are eligible via online mode.`,
+
+
+        "how long do the training programs last": `The minimum duration is 1 month and it can last up to 2 months.`,
+
+
+        "do you provide accommodation for participants during the training program": `We do not provide accommodation during the training program. However if candidates are from other districts and can align with our training we can help them find accommodation within walking distance from our Institute.`,
+
+
+        "do you provide any materials during the training": `We provide materials of the course when the course is completed and we also provide some materials during the training period when the topic is completed.`,
+
+
+        "what services do you provide": `REACT provides full support to people with disabilities, their parents, and educational institutions. We also partner with employers, government institutions, and NGOs to ensure a complete support system.`,
+
+
+        "what support is provided for educational institutions": `REACT offers medical camps, career counselling, assistive tools, and education sponsorships for educational institutions.`,
+
+
+        "what types of disabilities does react support": `REACT supports persons with hearing impairment, visual impairment (blindness/low vision), locomotor disability, cerebral palsy, intellectual disability, and multiple disabilities.`,
+
+
+        "does react provide job placement support": `Yes, REACT provides job placement support by training candidates, preparing them for interviews, and connecting them with inclusive employers.`,
+
+
+        "how many employers does react work with": `REACT works with around 100 to 150 employers.`,
+
+
+        "which districts do you provide job placement in": `We provide job placement across Tamil Nadu.`,
+
+
+        "what types of jobs do you provide": `We provide jobs in manufacturing, telecalling, accounting, and data entry, based on the candidate's skills, education, and ability.`,
+
+
+        "what salary range can candidates expect": `Candidates can expect a salary between ₹10,000 and ₹20,000.`,
+
+
+        "what support do you provide to start a business or for self-employment": `We provide vocational training and guidance to apply for loans through the Disability Office to support self-employment.`,
+
+
+        "can we apply for a loan without training": `Yes, loan applications can be supported based on your existing skill set.`,
+
+
+        "how long will it take to process the loan": `The loan processing time depends on your CIBIL score and business idea, and the bank will make the final decision.`,
+
+
+        "how much loan amount can we apply for": `You can apply for a loan of up to ₹1 lakh, which includes a ₹25,000 subsidy.`,
+      };
+
+
+      const defaultReply = `Need more information? Feel free to contact us anytime. Our team is ready to help you. 📞 Call us at +91 63820 69647.`;
+
+
+      const robotSVG = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="32" y1="3" x2="32" y2="13" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="32" cy="3" r="3.5" fill="white"/>
+        <rect x="11" y="13" width="42" height="28" rx="7" fill="white"/>
+        <rect x="17" y="21" width="10" height="10" rx="3" fill="#667eea"/>
+        <circle cx="22" cy="26" r="3" fill="white"/>
+        <rect x="37" y="21" width="10" height="10" rx="3" fill="#667eea"/>
+        <circle cx="42" cy="26" r="3" fill="white"/>
+        <rect x="20" y="35" width="24" height="4" rx="2" fill="#9b7fd4"/>
+        <rect x="6" y="22" width="5" height="10" rx="2.5" fill="white"/>
+        <rect x="53" y="22" width="5" height="10" rx="2.5" fill="white"/>
+        <rect x="16" y="43" width="32" height="17" rx="6" fill="white"/>
+        <circle cx="25" cy="52" r="4" fill="#667eea"/>
+        <circle cx="39" cy="52" r="4" fill="#9b7fd4"/>
+        <rect x="30" y="48" width="4" height="8" rx="2" fill="#c4b0ec"/>
+      </svg>`;
+
+
+      let isOpen = false,
+        greeted = false,
+        hasInteracted = false,
+        questionsVisible = true;
+
+
+      function toggleChat() {
+        isOpen = !isOpen;
+        document.getElementById("chatWindow").classList.toggle("open", isOpen);
+        document.getElementById("chatToggle").classList.toggle("open", isOpen);
+        if (isOpen && !greeted) {
+          greeted = true;
+          setTimeout(
+            () =>
+              showTypingThen(
+                `👋 Hi there! Welcome to <b>REACT</b> — Resource Education And Charitable Trust.<br><br>
+             I'm here to help you learn about our services, programs, and how we support people with disabilities.<br><br>
+             How can I assist you today?`,
+                1000,
+              ),
+            300,
+          );
+        }
+      }
+
+
+      function toggleQuickQuestions() {
+        questionsVisible = !questionsVisible;
+        const panel = document.getElementById("quickQuestions");
+        const btn = document.getElementById("showQuestionsBtn");
+        if (questionsVisible) {
+          panel.classList.remove("hidden");
+          btn.textContent = "🔼 Hide quick questions";
+        } else {
+          panel.classList.add("hidden");
+          btn.textContent = "💬 Show quick questions";
+        }
+      }
+
+
+      function handleFirstInteraction() {
+        if (!hasInteracted) {
+          hasInteracted = true;
+          setTimeout(() => {
+            document.getElementById("quickQuestions").classList.add("hidden");
+            document
+              .getElementById("showQuestionsBtn")
+              .classList.add("visible");
+            questionsVisible = false;
+            document.getElementById("showQuestionsBtn").textContent =
+              "💬 Show quick questions";
+          }, 200);
+        }
+      }
+
+
+      function askQuestion(btn) {
+        handleFirstInteraction();
+        const text = btn.textContent.trim();
+        addMessage(text, "user");
+        showTypingThen(findAnswer(text.toLowerCase()), 900);
+      }
+
+
+      function sendMessage() {
+        const input = document.getElementById("chatInput");
+        const text = input.value.trim();
+        if (!text) return;
+        input.value = "";
+        handleFirstInteraction();
+        addMessage(text, "user");
+        showTypingThen(findAnswer(text.toLowerCase()), 900);
+      }
+
+
+      function findAnswer(query) {
+        const q = query.toLowerCase();
+
+
+        // Direct key match
+        for (const [key, answer] of Object.entries(kb)) {
+          if (q.includes(key) || key.includes(q)) return answer;
+        }
+
+
+        // Keyword fallbacks — strictly mapped to existing KB answers only
+        if (q.includes("organization") || q.includes("what do you do"))
+          return kb["what does your organization do"];
+        if (q.includes("support") && q.includes("people"))
+          return kb["what support do you provide to people"];
+        if (
+          q.includes("skill training") ||
+          q.includes("employment support") ||
+          q.includes("digital literacy") ||
+          q.includes("soft skill") ||
+          q.includes("bank exam") ||
+          q.includes("it training") ||
+          q.includes("interview skill") ||
+          q.includes("communication")
+        )
+          return kb[
+            "what kind of skill training and employment support do you provide for pwd"
+          ];
+        if (
+          (q.includes("how long") || q.includes("duration")) &&
+          !q.includes("loan")
+        )
+          return kb["how long do the training programs last"];
+        if (
+          q.includes("accommodation") ||
+          q.includes("stay") ||
+          q.includes("hostel")
+        )
+          return kb[
+            "do you provide accommodation for participants during the training program"
+          ];
+        if (q.includes("material") || q.includes("notes"))
+          return kb["do you provide any materials during the training"];
+        if (q.includes("services") || q.includes("what do you provide"))
+          return kb["what services do you provide"];
+        if (
+          q.includes("educational institution") ||
+          q.includes("school") ||
+          q.includes("college") ||
+          q.includes("medical camp") ||
+          q.includes("sponsorship")
+        )
+          return kb["what support is provided for educational institutions"];
+        if (
+          q.includes("disabilit") ||
+          q.includes("hearing impairment") ||
+          q.includes("visual impairment") ||
+          q.includes("locomotor") ||
+          q.includes("cerebral palsy") ||
+          q.includes("intellectual")
+        )
+          return kb["what types of disabilities does react support"];
+        if (
+          q.includes("job placement") ||
+          (q.includes("placement") && q.includes("support"))
+        )
+          return kb["does react provide job placement support"];
+        if (q.includes("how many employer") || q.includes("number of employer"))
+          return kb["how many employers does react work with"];
+        if (
+          q.includes("district") ||
+          q.includes("tamil nadu") ||
+          q.includes("which area")
+        )
+          return kb["which districts do you provide job placement in"];
+        if (
+          q.includes("types of job") ||
+          q.includes("what job") ||
+          q.includes("manufacturing") ||
+          q.includes("telecall") ||
+          q.includes("accounting") ||
+          q.includes("data entry")
+        )
+          return kb["what types of jobs do you provide"];
+        if (
+          q.includes("salary") ||
+          q.includes("pay") ||
+          q.includes("wage") ||
+          q.includes("income") ||
+          q.includes("earn")
+        )
+          return kb["what salary range can candidates expect"];
+        if (
+          q.includes("self-employ") ||
+          q.includes("self employ") ||
+          q.includes("business") ||
+          q.includes("start a business") ||
+          q.includes("vocational")
+        )
+          return kb[
+            "what support do you provide to start a business or for self-employment"
+          ];
+        if (
+          q.includes("loan without") ||
+          (q.includes("loan") && q.includes("without training"))
+        )
+          return kb["can we apply for a loan without training"];
+        if (
+          (q.includes("how long") || q.includes("process time")) &&
+          q.includes("loan")
+        )
+          return kb["how long will it take to process the loan"];
+        if (
+          q.includes("loan amount") ||
+          q.includes("how much loan") ||
+          q.includes("lakh") ||
+          q.includes("subsidy")
+        )
+          return kb["how much loan amount can we apply for"];
+
+
+        return defaultReply;
+      }
+
+
+      function addMessage(html, sender) {
+        const container = document.getElementById("chatMessages");
+        const div = document.createElement("div");
+        div.className = `msg ${sender}`;
+        if (sender === "bot") {
+          div.innerHTML = `<div class="msg-avatar">${robotSVG}</div><div class="msg-bubble">${html}</div>`;
+        } else {
+          div.innerHTML = `<div class="msg-bubble">${html}</div>`;
+        }
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight;
+      }
+
+
+      function showTypingThen(html, delay) {
+        const container = document.getElementById("chatMessages");
+        const typingDiv = document.createElement("div");
+        typingDiv.className = "msg bot typing";
+        typingDiv.innerHTML = `<div class="msg-avatar">${robotSVG}</div><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+        container.appendChild(typingDiv);
+        container.scrollTop = container.scrollHeight;
+        setTimeout(() => {
+          typingDiv.remove();
+          addMessage(html, "bot");
+        }, delay);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job History</title>
+    <style>
+        body { font-family: Segoe UI; background:#eef1ff; padding:30px }
+        table { width:100%; border-collapse:collapse; background:white }
+        th, td { padding:10px; border:1px solid #ccc }
+        th { background:#667eea; color:white }
+    </style>
+</head>
+<body>
+
+<h2>Candidate Job History</h2>
+
+<table>
+<tr>
+    <th>Job</th>
+    <th>Company</th>
+    <th>Location</th>
+    <th>Salary</th>
+    <th>Date</th>
+</tr>
+
+<% jobs.forEach(job => { %>
+<tr>
+    <td><%= job.jobTitle %></td>
+    <td><%= job.company %></td>
+    <td><%= job.location %></td>
+    <td><%= job.salary %></td>
+    <td><%= job.createdAt.toDateString() %></td>
+</tr>
+<% }) %>
+
+</table>
+
+</body>
+</html>

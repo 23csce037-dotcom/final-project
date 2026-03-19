@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Volunteer Profiles - REACT</title>
+
+<style>
+*, *::before, *::after{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:"Segoe UI",sans-serif;
+background:#f5f6f8;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+header{
+background:linear-gradient(135deg,#667eea,#764ba2);
+padding:10px 0;
+}
+
+nav{
+max-width:1200px;
+margin:auto;
+display:flex;
+align-items:center;
+padding:10px 20px;
+}
+
+.logo{
+color:white;
+font-weight:bold;
+font-size:22px;
+}
+
+.nav-links{
+margin-left:auto;
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+}
+
+.container{
+width:90%;
+max-width:1400px;
+margin:40px auto;
+padding:20px;
+flex:1;
+}
+
+h2{
+color:#2c5aa0;
+margin-bottom:20px;
+}
+
+/* TABLE CARD */
+.table-wrap{
+background:white;
+border-radius:14px;
+overflow-x:auto;
+box-shadow:0 6px 32px rgba(102,126,234,0.2);
+width:100%;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:1200px;
+}
+
+/* HEADER */
+thead tr{
+background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+thead th{
+padding:18px 24px;
+text-align:left;
+font-size:14px;
+font-weight:600;
+color:rgba(255,255,255,0.9);
+letter-spacing:0.8px;
+text-transform:uppercase;
+}
+
+/* BODY */
+tbody tr{
+border-bottom:1px solid #eaecf8;
+}
+
+tbody tr:nth-child(even){
+background:#f6f7ff;
+}
+
+tbody tr:hover{
+background:#eef1ff;
+}
+
+td{
+padding:20px 24px;
+font-size:15px;
+color:#333;
+}
+
+/* EMPTY ROW */
+.empty td{
+text-align:center;
+padding:60px;
+color:#888;
+font-size:14px;
+}
+
+.table-wrap::-webkit-scrollbar{
+height:6px;
+}
+
+footer{
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+text-align:center;
+padding:15px;
+margin-top:40px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<nav>
+<div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+<ul class="nav-links">
+<li><a href="/admin">Dashboard</a></li>
+<li><a href="/admin/volunteers">Volunteers</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
+
+</nav>
+</header>
+
+<div class="container">
+
+<h2>Volunteer Profiles</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Age</th>
+<th>Date of Birth</th>
+<th>Gender</th>
+<th>Qualification</th>
+<th>Previous Volunteer</th>
+<th>Experience</th>
+</tr>
+</thead>
+
+<tbody>
+
+<% if(volunteers.length > 0){ %>
+
+<% volunteers.forEach(function(v){ %>
+
+<tr>
+<td><%= v.fullName %></td>
+<td><%= v.email %></td>
+<td><%= v.age %></td>
+<td><%= v.dob ? v.dob.toDateString() : "" %></td>
+<td><%= v.gender %></td>
+<td><%= v.qualification %></td>
+<td><%= v.previousVolunteer %></td>
+<td><%= v.volunteerExperience %></td>
+</tr>
+
+<% }) %>
+
+<% } else { %>
+
+<tr class="empty">
+<td colspan="8">No volunteer profiles found</td>
+</tr>
+
+<% } %>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 REACT | Admin Volunteer Profiles
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employers of PwDs - Career Services | REACT</title>
+
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f6fb;
+        color: #333;
+      }
+
+
+      /* Header */
+      header {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+      }
+
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c5aa0;
+      }
+
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+
+      .nav-links a:hover {
+        color: #2c5aa0;
+      }
+
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+
+      .menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: #333;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+
+      /* Hero Section */
+      .hero {
+        position: relative;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        text-align: center;
+        padding: 4rem 1rem;
+        overflow: hidden;
+      }
+
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&h=600&fit=crop")
+          center/cover;
+        opacity: 0.15;
+        z-index: 0;
+      }
+
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        font-weight: 700;
+      }
+
+
+      .hero .subtitle {
+        font-size: 1.8rem;
+        font-weight: 300;
+        font-style: italic;
+        color: #ff4444;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+
+      /* Intro Section */
+      .intro-section {
+        background: white;
+        padding: 3rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .intro-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: justify;
+        font-size: 1.1rem;
+        line-height: 1.9;
+        color: #333;
+      }
+
+
+      .intro-content .highlight {
+        font-weight: 600;
+        color: #2c5aa0;
+      }
+
+
+      /* Benefits Section */
+      .benefits-section {
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        padding: 3rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .benefits-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+
+      .benefits-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 1rem;
+      }
+
+
+      .benefits-list {
+        font-size: 1.1rem;
+        color: #333;
+        line-height: 1.8;
+      }
+
+
+      /* Services Section */
+      .services-section {
+        background: white;
+        padding: 4rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .services-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+
+      .service-item {
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+
+      .service-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+
+      .service-item h3 {
+        color: #764ba2;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+
+      .service-item h3::before {
+        content: "■";
+        display: inline-block;
+        margin-right: 0.5rem;
+        color: #667eea;
+      }
+
+
+      .service-item p {
+        line-height: 1.8;
+        color: #333;
+        text-align: justify;
+        flex-grow: 1;
+        font-size: 1.05rem;
+      }
+
+
+      /* Image Gallery Section */
+      .image-gallery {
+        background: #fff;
+        padding: 4rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .gallery-title {
+        text-align: center;
+        color: #2c5aa0;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        font-weight: 700;
+      }
+
+
+      .image-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+      }
+
+
+      .image-box {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        height: 350px;
+      }
+
+
+      .image-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      }
+
+
+      .image-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+      }
+
+
+      .image-box:hover img {
+        transform: scale(1.1) rotate(2deg);
+      }
+
+
+      .image-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+        color: white;
+        padding: 2rem 1.5rem 1.5rem;
+        transform: translateY(100%);
+        transition: transform 0.3s;
+      }
+
+
+      .image-box:hover .image-caption {
+        transform: translateY(0);
+      }
+
+
+      .image-caption h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+
+      .image-caption p {
+        font-size: 0.95rem;
+        opacity: 0.9;
+      }
+
+
+      /* CTA Section */
+      .cta-section {
+        background: linear-gradient(135deg, #000000, #4b0082, #ffffff);
+        padding: 4rem 2rem;
+        text-align: center;
+      }
+
+
+      .cta-section h2 {
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+
+      .cta-section p {
+        color: white;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+
+      .cta-btn {
+        display: inline-block;
+        padding: 1rem 3rem;
+        background: white;
+        color: #4b0082;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        border: 2px solid white;
+        transition: all 0.3s;
+      }
+
+
+      .cta-btn:hover {
+        background: transparent;
+        color: white;
+      }
+
+
+      /* Group Photo Section */
+      .group-photo-section {
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        padding: 4rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .group-photo-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+
+      .group-photo-box {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      }
+
+
+      .group-photo-box img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+
+      /* Footer */
+      .footer {
+        background: #2c3e50;
+        color: #bdc3c7;
+        text-align: center;
+        padding: 1.5rem;
+      }
+
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: white;
+          flex-direction: column;
+          padding: 2rem;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          display: none;
+        }
+
+
+        .nav-links.active {
+          display: flex;
+        }
+
+
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+
+
+        .hero .subtitle {
+          font-size: 1.3rem;
+        }
+
+
+        .intro-content {
+          text-align: left;
+          font-size: 1rem;
+        }
+
+
+        .gallery-title {
+          font-size: 1.8rem;
+        }
+
+
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+
+
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
+
+
+        .service-item p {
+          text-align: left;
+        }
+
+
+        .cta-section h2 {
+          font-size: 1.8rem;
+        }
+
+
+        .image-box {
+          height: 280px;
+        }
+      }
+
+
+      @media (max-width: 480px) {
+        nav {
+          padding: 1rem;
+        }
+
+
+        .hero {
+          padding: 2.5rem 1rem;
+        }
+
+
+        .hero h1 {
+          font-size: 1.8rem;
+        }
+
+
+        .hero .subtitle {
+          font-size: 1.1rem;
+        }
+
+
+        .intro-section {
+          padding: 2rem 1rem;
+        }
+
+
+        .service-item {
+          padding: 1.5rem;
+        }
+
+
+        .image-box {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+
+
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav>
+          <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/">Home</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="/register">Get Involved</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Employers of PwDs</h1>
+        <p class="subtitle">
+          Build an Inclusive Workforce and Unlock Untapped Talent
+        </p>
+      </div>
+    </section>
+
+
+    <!-- Intro Section -->
+    <section class="intro-section">
+      <div class="intro-content">
+        <p>
+          In today's dynamic business environment in Madurai, fostering an
+          inclusive workplace is not just a matter of social responsibility,
+          it's a strategic advantage. REACT offers comprehensive PwD inclusion
+          services designed to help your organization tap into the valuable
+          skills and perspectives of individuals with disabilities, creating a
+          more innovative, productive, and representative workforce.
+          <span class="highlight">Benefits of Inclusion:</span> Increased
+          innovation, broader talent pool, enhanced company reputation
+        </p>
+      </div>
+    </section>
+
+
+    <!-- Services Section -->
+    <section class="services-section">
+      <div class="services-container">
+        <div class="services-grid">
+          <!-- Sensitization Workshops -->
+          <div class="service-item">
+            <h3>Sensitization Workshops</h3>
+            <p>
+              Training for employees to foster an inclusive and welcoming
+              workplace culture.
+            </p>
+          </div>
+
+
+          <!-- Inclusion Policy Development -->
+          <div class="service-item">
+            <h3>Inclusion Policy Development</h3>
+            <p>
+              Guidance in creating and implementing effective inclusion
+              policies.
+            </p>
+          </div>
+
+
+          <!-- Infrastructure Audit -->
+          <div class="service-item">
+            <h3>Infrastructure Audit and Workplace Solutions</h3>
+            <p>
+              Expert advice on making your workplace accessible and supportive.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Image Gallery Section -->
+    <section class="image-gallery">
+      <h2 class="gallery-title">Our Inclusion Initiatives</h2>
+      <div class="image-grid">
+        <div class="image-box">
+          <img src="/images/react13.jpeg" alt="Sensitization Workshops" />
+          <div class="image-caption">
+            <h3>Industrial Visit at Courtyard Marriott</h3>
+            <p>Building inclusive workplace culture through training</p>
+          </div>
+        </div>
+        <div class="image-box">
+          <img src="/images/react15.jpeg" alt="Policy Development" />
+          <div class="image-caption">
+            <h3>Accessibility Audit at Aurolab</h3>
+            <p>Creating effective inclusion strategies</p>
+          </div>
+        </div>
+        <div class="image-box">
+          <img src="/images/react17.jpeg" alt="Workplace Solutions" />
+          <div class="image-caption">
+            <h3>Workplace Solutions</h3>
+            <p>Making workplaces accessible and supportive</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Group Photo Section -->
+    <section class="group-photo-section">
+      <div class="group-photo-container">
+        <div class="group-photo-box">
+          <img
+            src="/images/react21.jpeg"
+            alt="REACT Employer Workshop - Group Photo"
+          />
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Contact CTA Section -->
+    <section class="cta-section">
+      <h2>Become an Inclusive Employer</h2>
+      <p>
+        Ready to build a more diverse and inclusive workplace? Request a
+        consultation today.
+      </p>
+      <a href="/contact" class="cta-btn">CONTACT US</a>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>
+        © 2024 Resource Education And Charitable Trust - Madurai. All rights
+        reserved.
+      </p>
+    </footer>
+
+
+    <script>
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+
+
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            navLinks.classList.remove("active");
+          }
+        });
+      });
+
+
+      // Add scroll effect to header
+      let lastScroll = 0;
+      const header = document.querySelector("header");
+
+
+      window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+
+        if (currentScroll <= 0) {
+          header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+        } else {
+          header.style.boxShadow = "0 4px 20px rgba(0,0,0,0.15)";
+        }
+
+
+        lastScroll = currentScroll;
+      });
+
+
+      // Add animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+
+      document.querySelectorAll(".service-item, .image-box").forEach((item) => {
+        item.style.opacity = "0";
+        item.style.transform = "translateY(20px)";
+        item.style.transition = "opacity 0.6s, transform 0.6s";
+        observer.observe(item);
+      });
+    </script>
+  </body>
+</html>

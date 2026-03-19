@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Job Opportunities - REACT</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana;
+            margin: 0;
+            background: #f4f6fb;
+        }
+
+        /* ===== NAVBAR ===== */
+        header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-links {
+            margin-left: auto;
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* ===== PAGE CONTAINER ===== */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c5aa0;
+            margin-bottom: 20px;
+        }
+
+        /* ===== JOB CARD ===== */
+        .job-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-card h2 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .job-card p {
+            color: #444;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <header>
+        <nav>
+            <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/pwd">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== JOB LIST ===== -->
+    <div class="container">
+
+        <h1>My Job Notifications</h1>
+
+       <% if(jobs.length === 0){ %>
+            <p>No jobs assigned to you yet.</p>
+            <% } %>
+
+                <% jobs.forEach(job=> { %>
+
+                    <div class="job-card">
+                        <h2>
+                            <%= job.jobTitle %>
+                        </h2>
+
+                        <p><b>Company:</b>
+                            <%= job.company %>
+                        </p>
+                        <p><b>Location:</b>
+                            <%= job.location %>
+                        </p>
+                        <p><b>Type:</b>
+                            <%= job.jobType %>
+                        </p>
+                        <p><b>Salary:</b>
+                            <%= job.salary %>
+                        </p>
+
+                        <p>
+                            <%= job.description %>
+                        </p>
+                    </div>
+
+                    <% }) %>
+
+    </div>
+
+</body>
+
+</html>
+

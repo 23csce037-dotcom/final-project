@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Scholarships - REACT</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma;
+            margin: 0;
+            background: #f4f6fb;
+        }
+
+        /* ===== NAVBAR ===== */
+        header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 10px 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            margin-left: auto;
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* ===== CONTENT ===== */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c5aa0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: #2c5aa0;
+        }
+
+        ul {
+            line-height: 2;
+            color: #444;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <header>
+        <nav>
+            <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/pwd">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== SCHOLARSHIP DETAILS ===== -->
+    <div class="container">
+
+        <h2>Available Scholarship</h2>
+
+        <div class="card">
+
+            <h3>🎓 Merit Scholarship for PWD Candidates</h3>
+
+            <p>
+                This scholarship is provided for candidates who completed
+                their degree successfully without arrears.
+            </p>
+
+            <h4>Eligibility Criteria:</h4>
+
+            <ul>
+                <li>✅ Must be a PWD candidate</li>
+                <li>✅ Completed Degree without arrears</li>
+                <li>✅ Minimum CGPA: 7.0 or above</li>
+                <li>✅ Engineering / Any Degree Eligible</li>
+                <li>✅ Passed out students can apply</li>
+            </ul>
+
+            <h4>Benefits:</h4>
+
+            <ul>
+                <li>💰 Scholarship Amount depends on the degree, disability type and available schemes</li>
+                <li>📚 Career Support</li>
+                <li>🏢 Placement Assistance</li>
+            </ul>
+
+            <a href="/scholarship/apply" class="btn">
+                Apply for Scholarship
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

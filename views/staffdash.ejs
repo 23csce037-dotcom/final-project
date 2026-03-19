@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Dashboard - REACT</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+line-height:1.6;
+color:#333;
+}
+
+header{
+background:#fff;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+nav{
+max-width:1200px;
+margin:0 auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:1rem 2rem;
+}
+
+.logo{
+font-size:1.5rem;
+font-weight:bold;
+color:#2c5aa0;
+}
+
+.nav-links{
+display:flex;
+list-style:none;
+gap:2rem;
+}
+
+.nav-links a{
+text-decoration:none;
+color:#333;
+font-weight:500;
+transition:color 0.3s;
+}
+
+.nav-links a:hover{
+color:#2c5aa0;
+}
+
+.menu-toggle{
+display:none;
+flex-direction:column;
+cursor:pointer;
+}
+
+.menu-toggle span{
+width:25px;
+height:3px;
+background:#333;
+margin:3px 0;
+}
+
+.hero{
+background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+color:white;
+padding:5rem 2rem;
+text-align:center;
+}
+
+.hero h1{
+font-size:2.5rem;
+margin-bottom:1rem;
+}
+
+.hero p{
+font-size:1.2rem;
+max-width:800px;
+margin:0 auto;
+}
+
+.container{
+max-width:1200px;
+margin:0 auto;
+padding:3rem 2rem;
+}
+
+.dashboard-table-wrapper{
+background:white;
+padding:2rem;
+border-radius:10px;
+box-shadow:0 4px 20px rgba(0,0,0,0.08);
+overflow-x:auto;
+}
+
+.dashboard-table-wrapper h2{
+color:#2c5aa0;
+margin-bottom:1.5rem;
+font-size:1.8rem;
+}
+
+.dashboard-table{
+width:100%;
+border-collapse:collapse;
+margin-top:1rem;
+}
+
+.dashboard-table th,
+.dashboard-table td{
+padding:1rem;
+text-align:center;
+border-bottom:1px solid #e0e0e0;
+}
+
+.dashboard-table th{
+background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+color:white;
+font-weight:600;
+}
+
+.dashboard-table tbody tr:hover{
+background:#f5f5f5;
+}
+
+.dashboard-table tfoot tr{
+background:#f8f9fa;
+font-weight:bold;
+}
+
+.dashboard-table tfoot td{
+color:#2c5aa0;
+font-size:1.1rem;
+border-top:2px solid #2c5aa0;
+}
+
+footer{
+background:#2c3e50;
+color:white;
+padding:3rem 2rem;
+margin-top:3rem;
+}
+
+.footer-bottom{
+text-align:center;
+margin-top:2rem;
+color:#bdc3c7;
+}
+
+@media (max-width:768px){
+
+.menu-toggle{
+display:flex;
+}
+
+.nav-links{
+display:none;
+position:absolute;
+top:100%;
+left:0;
+width:100%;
+background:white;
+flex-direction:column;
+padding:2rem;
+}
+
+.nav-links.active{
+display:flex;
+}
+
+.dashboard-table{
+font-size:0.9rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+
+<div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+<ul class="nav-links" id="navLinks">
+<li><a href="/">Home</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
+
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+</nav>
+</header>
+
+<section class="hero">
+<h1>Staff Dashboard</h1>
+<p>Welcome to REACT Staff Portal. Manage and track all organizational activities.</p>
+</section>
+
+<div class="container">
+
+<div class="dashboard-table-wrapper">
+
+<h2>Overview Statistics</h2>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+
+<div>
+<label><strong>Filter by Year:</strong></label>
+
+<select id="yearFilter">
+<option value="all" <%= selectedYear==="all"?"selected":"" %>>All Years</option>
+<option value="2026" <%= selectedYear==="2026"?"selected":"" %>>2026</option>
+<option value="2027" <%= selectedYear==="2027"?"selected":"" %>>2027</option>
+<option value="2028" <%= selectedYear==="2028"?"selected":"" %>>2028</option>
+<option value="2029" <%= selectedYear==="2029"?"selected":"" %>>2029</option>
+</select>
+
+</div>
+
+<button onclick="downloadReport()" style="padding:6px 12px;cursor:pointer;">
+Download Report
+</button>
+
+</div>
+
+<table class="dashboard-table">
+
+<thead>
+<tr>
+<th>Month</th>
+<th>PWD Candidates</th>
+<th>Volunteers</th>
+<th>Employers</th>
+</tr>
+</thead>
+
+<tbody>
+
+<%
+const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+let pwdTotal = 0;
+let volTotal = 0;
+let empTotal = 0;
+
+for(let i=1;i<=12;i++){
+
+let pwd = (pwdMonthly || []).find(m=>m._id===i)?.count || 0;
+let vol = (volunteerMonthly || []).find(m=>m._id===i)?.count || 0;
+let emp = (employerMonthly || []).find(m=>m._id===i)?.count || 0;
+
+pwdTotal += pwd;
+volTotal += vol;
+empTotal += emp;
+%>
+
+<tr>
+<td><%= months[i-1] %></td>
+<td><%= pwd %></td>
+<td><%= vol %></td>
+<td><%= emp %></td>
+</tr>
+
+<% } %>
+
+</tbody>
+
+<tfoot>
+
+<tr>
+<td><strong>TOTAL</strong></td>
+
+<td><%= pwdTotal %></td>
+<td><%= volTotal %></td>
+<td><%= empTotal %></td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+</div>
+</div>
+
+<footer>
+<div class="footer-bottom">
+<p>&copy; 2026 REACT. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+
+const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
+
+menuToggle.addEventListener("click",()=>{
+navLinks.classList.toggle("active");
+});
+
+function downloadReport(){
+
+let csv=[];
+
+document.querySelectorAll("table tr").forEach(row=>{
+
+let cols=row.querySelectorAll("th,td");
+
+let rowData=[];
+
+cols.forEach(col=>rowData.push(col.innerText));
+
+csv.push(rowData.join(","));
+
+});
+
+let blob=new Blob([csv.join("\n")],{type:"text/csv"});
+
+let link=document.createElement("a");
+
+link.download="staff_report.csv";
+
+link.href=window.URL.createObjectURL(blob);
+
+link.click();
+
+}
+/* ===== YEAR FILTER ===== */
+
+const yearFilter = document.getElementById("yearFilter");
+
+yearFilter.addEventListener("change", function () {
+
+const year = this.value;
+
+window.location.href = "/staffdash?year=" + year;
+
+});
+
+</script>
+
+</script>
+
+</body>
+</html>

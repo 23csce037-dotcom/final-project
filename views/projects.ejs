@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects – REACT</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --navy: #2c3e8c;
+        --blue: #2c5aa0;
+        --violet: #764ba2;
+        --grad: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --light: #f5f7ff;
+        --white: #ffffff;
+        --text: #2a2a3a;
+        --muted: #666680;
+        --card-shadow: 0 8px 40px rgba(44, 90, 160, 0.13);
+      }
+
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        color: var(--text);
+        background: var(--white);
+        overflow-x: hidden;
+      }
+
+
+      /* ── NAV ─────────────────────────────────────────── */
+      header {
+        background: var(--white);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 20px rgba(44, 90, 160, 0.08);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--blue);
+        letter-spacing: -0.5px;
+      }
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 1.8rem;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--blue);
+      }
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+      .menu-toggle span {
+        width: 25px;
+        height: 2px;
+        background: var(--text);
+        border-radius: 2px;
+      }
+
+
+      /* ── HERO BANNER ─────────────────────────────────── */
+      .projects-hero {
+        background: var(--grad);
+        color: var(--white);
+        padding: 5rem 2rem 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .projects-hero::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        pointer-events: none;
+      }
+      .projects-hero::after {
+        content: "";
+        position: absolute;
+        bottom: -80px;
+        left: -40px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+      }
+      .hero-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-text h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.6rem, 5vw, 4rem);
+        line-height: 1.15;
+        margin-bottom: 1.2rem;
+      }
+      .hero-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        opacity: 0.9;
+        max-width: 700px;
+      }
+
+
+      /* ── INTRO STRIP ──────────────────────────────────── */
+      .intro-strip {
+        background: var(--light);
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+      .intro-strip p {
+        max-width: 800px;
+        margin: 0 auto;
+        font-size: 1.05rem;
+        line-height: 1.85;
+        color: var(--muted);
+      }
+
+
+      /* ── SECTION TITLE ───────────────────────────────── */
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .section-title .tag {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--violet);
+        background: rgba(118, 75, 162, 0.1);
+        padding: 0.35rem 0.9rem;
+        border-radius: 20px;
+        margin-bottom: 0.8rem;
+      }
+      .section-title h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+        color: var(--navy);
+      }
+
+
+      /* ── CONTAINER ───────────────────────────────────── */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+
+      /* ── FEATURED PROJECT (ALTERNATING) ──────────────── */
+      .featured-section {
+        padding: 5rem 0;
+      }
+      .featured-project {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 3.5rem;
+        min-height: 380px;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+      .featured-project:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 60px rgba(44, 90, 160, 0.18);
+      }
+      .featured-project.reverse {
+        direction: rtl;
+      }
+      .featured-project.reverse > * {
+        direction: ltr;
+      }
+
+
+      .fp-image {
+        position: relative;
+        overflow: hidden;
+        min-height: 300px;
+      }
+      .fp-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+      }
+      .featured-project:hover .fp-image img {
+        transform: scale(1.04);
+      }
+      .fp-image .badge {
+        position: absolute;
+        top: 1.2rem;
+        left: 1.2rem;
+        background: var(--white);
+        color: var(--blue);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 0.35rem 0.8rem;
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+      .fp-content {
+        background: var(--white);
+        padding: 3rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .fp-content h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.7rem;
+        color: var(--navy);
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+      .fp-content p {
+        color: var(--muted);
+        line-height: 1.8;
+        margin-bottom: 0.9rem;
+        font-size: 0.97rem;
+      }
+      .fp-content p strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .partner-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: rgba(102, 126, 234, 0.08);
+        color: var(--blue);
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        margin-top: 0.5rem;
+        width: fit-content;
+      }
+      .partner-tag::before {
+        content: "🤝";
+      }
+
+
+      /* ── COMPACT GRID (3-col) ─────────────────────────── */
+      .compact-section {
+        padding: 5rem 0;
+        background: var(--light);
+      }
+      .compact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.8rem;
+      }
+      .compact-card {
+        background: var(--white);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(44, 90, 160, 0.09);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+      .compact-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 40px rgba(44, 90, 160, 0.18);
+      }
+      .cc-img {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+      }
+      .cc-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+      .compact-card:hover .cc-img img {
+        transform: scale(1.06);
+      }
+      .cc-label {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          to top,
+          rgba(44, 58, 140, 0.85),
+          transparent
+        );
+        padding: 1.5rem 1.2rem 0.8rem;
+      }
+      .cc-label span {
+        color: var(--white);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        opacity: 0.9;
+      }
+      .cc-body {
+        padding: 1.5rem 1.5rem 2rem;
+        flex: 1;
+      }
+      .cc-body h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.25rem;
+        color: var(--navy);
+        margin-bottom: 0.7rem;
+        line-height: 1.35;
+      }
+      .cc-body p {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.75;
+        margin-bottom: 0.6rem;
+      }
+      .cc-body p strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+
+      /* ── TRAINING DETAILS SECTION ─────────────────────── */
+      .training-section {
+        padding: 5rem 0;
+      }
+      .training-card {
+        background: var(--grad);
+        border-radius: 24px;
+        padding: 4rem;
+        color: var(--white);
+        box-shadow: 0 12px 50px rgba(102, 126, 234, 0.35);
+      }
+      .training-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .training-header h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.25;
+      }
+      .training-header p {
+        font-size: 1rem;
+        opacity: 0.9;
+        line-height: 1.8;
+      }
+      .training-modules {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+      .module-card {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 16px;
+        padding: 1.8rem 1.5rem;
+        backdrop-filter: blur(10px);
+        transition:
+          background 0.3s,
+          transform 0.3s;
+      }
+      .module-card:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-4px);
+      }
+      .module-icon {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+        display: block;
+      }
+      .module-number {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        opacity: 0.7;
+        margin-bottom: 0.4rem;
+      }
+      .module-card h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        line-height: 1.3;
+      }
+      .module-duration {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.7rem;
+      }
+      .module-topics {
+        font-size: 0.85rem;
+        opacity: 0.85;
+        line-height: 1.6;
+      }
+      .training-reg-note {
+        text-align: center;
+        margin-top: 2.5rem;
+        font-size: 0.95rem;
+        opacity: 0.9;
+      }
+      .training-reg-note a {
+        color: var(--white);
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+
+      /* ── CTA ──────────────────────────────────────────── */
+      .cta-bar {
+        background: var(--light);
+        padding: 4rem 2rem;
+        text-align: center;
+      }
+      .cta-bar h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: var(--navy);
+        margin-bottom: 0.8rem;
+      }
+      .cta-bar p {
+        color: var(--muted);
+        margin-bottom: 1.8rem;
+      }
+      .cta-button {
+        display: inline-block;
+        background: var(--grad);
+        color: var(--white);
+        padding: 0.9rem 2.4rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 0.3px;
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s;
+        box-shadow: 0 6px 24px rgba(102, 126, 234, 0.4);
+      }
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.55);
+      }
+
+
+      /* ── FOOTER ───────────────────────────────────────── */
+      footer {
+        background: #2c3e50;
+        color: var(--white);
+        padding: 3rem 2rem 1.5rem;
+      }
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      .footer-section h3 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        color: var(--white);
+      }
+      .footer-section p,
+      .footer-section li {
+        color: #bdc3c7;
+        font-size: 0.9rem;
+        line-height: 1.7;
+      }
+      .footer-section ul {
+        list-style: none;
+      }
+      .footer-section a {
+        color: #bdc3c7;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer-section a:hover {
+        color: var(--white);
+      }
+      .footer-bottom {
+        text-align: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid #34495e;
+        color: #bdc3c7;
+        font-size: 0.85rem;
+      }
+
+
+      /* ── ANIMATIONS ───────────────────────────────────── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.65s ease,
+          transform 0.65s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+
+      /* ── RESPONSIVE ───────────────────────────────────── */
+      @media (max-width: 900px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+        .featured-project,
+        .featured-project.reverse {
+          grid-template-columns: 1fr;
+          direction: ltr;
+        }
+        .fp-image {
+          min-height: 240px;
+        }
+        .training-card {
+          padding: 2.5rem 1.5rem;
+        }
+      }
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: var(--white);
+          flex-direction: column;
+          padding: 1.5rem 2rem;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+          display: none;
+        }
+        .nav-links.active {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <header>
+      <nav>
+          <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/">Home</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/programs">Programs</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/user">Events</a></li>
+          <li><a href="/register">Get Involved</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="projects-hero">
+      <div class="hero-inner">
+        <div class="hero-text reveal">
+          <h1>On-Ground Projects,<br />Real Impact.</h1>
+          <p>
+            At REACT, we believe that real change comes from on-the-ground
+            action. Our projects are carefully designed to address specific
+            needs within our community and build a strong foundation for
+            inclusion and empowerment — one initiative at a time.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- INTRO STRIP -->
+    <div class="intro-strip">
+      <p>
+        We are proud to partner with dedicated organizations to deliver these
+        projects, ensuring that our services reach those who need them most.
+        Together, we are building a more inclusive and equitable society, one
+        project at a time.
+      </p>
+    </div>
+
+
+    <!-- FEATURED ALTERNATING PROJECTS -->
+    <section class="featured-section" id="projects">
+      <div class="container">
+        <div class="section-title reveal">
+          <span class="tag">Core Initiatives</span>
+          <h2>Flagship Projects</h2>
+        </div>
+
+
+        <!-- Project 1 -->
+        <div class="featured-project reveal">
+          <div class="fp-image">
+            <img src="/images/react1.jpeg" alt="Career Guidance for PwDs" />
+            <span class="badge">Career</span>
+          </div>
+          <div class="fp-content">
+            <h3>Career Guidance for PwDs</h3>
+            <p>
+              REACT has partnered with the
+              <strong>Madurai District Disability Rehabilitation Center</strong>
+              and the <strong>Arogya Welfare Trust</strong> to offer
+              comprehensive support directly from the Collector's Office
+              premises.
+            </p>
+            <p>
+              This collaboration provides a full range of services including
+              <strong
+                >counseling, career advice, skill training with government
+                certifications, job placement, and self-employment
+                guidance</strong
+              >.
+            </p>
+            <div class="partner-tag">
+              Madurai District DRC &amp; Arogya Welfare Trust
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Project 2 – reversed -->
+        <div class="featured-project reverse reveal">
+          <div class="fp-image">
+            <img src="/images/react2.jpg" alt="Livelihood for PwDs" />
+            <span class="badge">Livelihood</span>
+          </div>
+          <div class="fp-content">
+            <h3>Livelihood for PwDs</h3>
+            <p>
+              REACT collaborates with leading organizations to offer
+              comprehensive training and placement support. We've partnered with
+              the <strong>Cheshire Disability Trust</strong> and the
+              <strong>Composite Regional Center</strong> to provide tailored
+              training and placement assistance.
+            </p>
+            <p>
+              We also work with specialized institutions to
+              <strong
+                >train deaf students in computer science and engineering</strong
+              >, equipping them with essential tech skills and helping them
+              secure employment in organized sectors.
+            </p>
+            <div class="partner-tag">
+              Cheshire Disability Trust &amp; Composite Regional Center
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Project 3 -->
+        <div class="featured-project reveal">
+          <div class="fp-image">
+            <img src="/images/react6.jpeg" alt="Rural Livelihood for PwDs" />
+            <span class="badge">Rural</span>
+          </div>
+          <div class="fp-content">
+            <h3>Rural Livelihood for PwDs</h3>
+            <p>
+              REACT is excited to launch a new project focused on helping people
+              with disabilities in rural communities find meaningful work. We've
+              partnered with the <strong>Thiyagam Women's Trust</strong> in
+              Madurai to address this important challenge.
+            </p>
+            <p>
+              Our first camp on <strong>September 2, 2025</strong>, attracted
+              <strong>42 participants</strong> and was a great success. The
+              project's goal is to empower these individuals to start their own
+              businesses, improving their financial well-being.
+            </p>
+            <div class="partner-tag">Thiyagam Women's Trust</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- COMPACT 3-COL GRID -->
+    <section class="compact-section">
+      <div class="container">
+        <div class="section-title reveal">
+          <span class="tag">Ongoing Work</span>
+          <h2>More Projects</h2>
+        </div>
+        <div class="compact-grid">
+          <!-- Card 1 -->
+          <div class="compact-card reveal">
+            <div class="cc-img">
+              <img
+                src="/images/react4.jpeg"
+                alt="Education for Visually Impaired"
+              />
+              <div class="cc-label"><span>Education</span></div>
+            </div>
+            <div class="cc-body">
+              <h3>
+                Education &amp; Support for People with Visual Impairments
+              </h3>
+              <p>
+                REACT partners with the
+                <strong>Help The Blind Foundation (HTBF)</strong> to provide
+                crucial education sponsorships for visually impaired students
+                pursuing higher education in Madurai.
+              </p>
+              <p>
+                We've established a strong network with
+                <strong>15 local colleges</strong> and collaborate with the
+                <strong>Aravind Eye Care System</strong> to offer medical
+                assistance, assistive tools, mobility training, and specialized
+                IT training.
+              </p>
+            </div>
+          </div>
+
+
+          <!-- Card 2 -->
+          <div class="compact-card reveal" style="transition-delay: 0.1s">
+            <div class="cc-img">
+              <img src="/images/react5.jpeg" alt="Therapy for Children" />
+              <div class="cc-label"><span>Therapy</span></div>
+            </div>
+            <div class="cc-body">
+              <h3>Therapy Support for Children with Special Needs</h3>
+              <p>
+                REACT has partnered with <strong>AVSS Hospitals</strong> to
+                offer a range of essential therapies at no cost, because the
+                cost of therapy can be a significant burden for parents.
+              </p>
+              <p>
+                Through monthly medical camps, a dedicated team — including a
+                <strong>developmental pediatrician</strong> — provides
+                <strong
+                  >occupational therapy, speech therapy, and behavioral
+                  therapy</strong
+                >, helping children on their journey toward independence.
+              </p>
+            </div>
+          </div>
+
+
+          <!-- Card 3 -->
+          <div class="compact-card reveal" style="transition-delay: 0.2s">
+            <div class="cc-img">
+              <img src="/images/react4.jpeg" alt="Upper Limb Impairments" />
+              <div class="cc-label"><span>Assistive Tech</span></div>
+            </div>
+            <div class="cc-body">
+              <h3>Empowering People with Upper Limb Impairments</h3>
+              <p>
+                REACT has partnered with <strong>Dextroware Devices</strong> to
+                provide access to their innovative wearable mouse, making it
+                easier for individuals with upper limb impairments to work on
+                computers.
+              </p>
+              <p>
+                Beyond device access, REACT offers
+                <strong>specialized employability skills training</strong> so
+                candidates have the tools and skills needed to succeed in the
+                digital world.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TRAINING DETAILS SECTION -->
+    <section class="training-section">
+      <div class="container">
+        <div class="training-card reveal">
+          <div class="training-header">
+            <h2>Training Details</h2>
+            <p>
+              Our structured training program covers essential skills to prepare
+              people with disabilities for employment and self-employment
+              opportunities. Register using the link below to enroll.
+            </p>
+          </div>
+          <div class="training-modules">
+            <!-- Module 1 -->
+            <div class="module-card">
+              <span class="module-icon">💻</span>
+              <div class="module-number">Module 01</div>
+              <h3>Digital Literacy</h3>
+              <span class="module-duration">20 hrs</span>
+              <div class="module-topics">
+                LinkedIn profile creation &amp; professional digital skills
+              </div>
+            </div>
+
+
+            <!-- Module 2 -->
+            <div class="module-card">
+              <span class="module-icon">🗂️</span>
+              <div class="module-number">Module 02</div>
+              <h3>Office Admin Skills</h3>
+              <span class="module-duration">20 hrs</span>
+              <div class="module-topics">
+                Word, Excel, Docs &amp; other office productivity tools
+              </div>
+            </div>
+
+
+            <!-- Module 3 -->
+            <div class="module-card">
+              <span class="module-icon">🗣️</span>
+              <div class="module-number">Module 03</div>
+              <h3>Soft Skills</h3>
+              <span class="module-duration">20 hrs</span>
+              <div class="module-topics">
+                Communication, interpersonal skills &amp; workplace readiness
+              </div>
+            </div>
+
+
+            <!-- Module 4 -->
+            <div class="module-card">
+              <span class="module-icon">🐍</span>
+              <div class="module-number">Module 04</div>
+              <h3>Python Programming</h3>
+              <span class="module-duration">40 – 60 hrs</span>
+              <div class="module-topics">
+                Core Python concepts, scripting &amp; practical applications
+              </div>
+            </div>
+
+
+            <!-- Module 5 -->
+            <div class="module-card">
+              <span class="module-icon">🧠</span>
+              <div class="module-number">Module 05</div>
+              <h3>Aptitude</h3>
+              <span class="module-duration">20 hrs</span>
+              <div class="module-topics">
+                Math, Reasoning &amp; English for competitive &amp; placement
+                tests
+              </div>
+            </div>
+          </div>
+          <div class="training-reg-note">
+            📋 To enroll, use the <a href="/register">Registration Link</a> —
+            join us and take the first step towards a brighter future.
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CTA -->
+    <div class="cta-bar">
+      <h2>Ready to Make a Difference?</h2>
+      <p>
+        Join us in building a more inclusive and accessible world for everyone
+        in our community.
+      </p>
+      <a href="/register" class="cta-button">Get Involved</a>
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About REACT</h3>
+          <p>
+            Resource Education And Charitable Trust — Dedicated to empowering
+            people with disabilities and creating sustainable community impact
+            through inclusion and accessibility.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/index">Home</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Our Services</h3>
+          <ul>
+            <li><a href="#">Career Guidance</a></li>
+            <li><a href="#">Training Programs</a></li>
+            <li><a href="#">Placement Support</a></li>
+            <li><a href="#">Self-Employment</a></li>
+            <li><a href="#">Inclusion Services</a></li>
+            <li><a href="#">Infrastructure Audit</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>Email: info@reactforgood.com</li>
+            <li>Phone: +91 123 456 7890</li>
+            <li>Address: Madurai, Tamil Nadu, India</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 Resource Education And Charitable Trust (REACT). All
+          rights reserved.
+        </p>
+      </div>
+    </footer>
+
+
+    <script>
+      // Mobile nav
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+      menuToggle.addEventListener("click", () =>
+        navLinks.classList.toggle("active"),
+      );
+
+
+      // Scroll-reveal
+      const revealEls = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+      );
+      revealEls.forEach((el) => io.observe(el));
+
+
+      // Header shadow on scroll
+      window.addEventListener("scroll", () => {
+        document.querySelector("header").style.boxShadow =
+          window.scrollY > 10
+            ? "0 4px 24px rgba(44,90,160,.15)"
+            : "0 2px 20px rgba(44,90,160,.08)";
+      });
+    </script>
+  </body>
+</html>

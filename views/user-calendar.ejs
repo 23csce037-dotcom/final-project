@@ -1,0 +1,734 @@
+
+<!Doctype html>
+<html lang="en">
+  <head>
+    <title>User Calendar</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f6fb;
+        color: #333;
+        min-height: 100vh;
+      }
+
+
+      /* ── NAVBAR ── */
+      header {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+      }
+
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c5aa0;
+      }
+
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+
+      .nav-links a:hover {
+        color: #2c5aa0;
+      }
+
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+
+      .menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: #333;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+
+      /* ── HERO ── */
+      .page-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2.5rem 2rem;
+        text-align: center;
+      }
+
+
+      .page-hero h1 {
+        font-size: 2rem;
+        margin-bottom: 0.4rem;
+      }
+
+
+      .page-hero p {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+
+
+      /* ── CONTAINER ── */
+      .container {
+        max-width: 1100px;
+        margin: 2.5rem auto;
+        padding: 0 1.5rem 3rem;
+      }
+
+
+      /* ── CALENDAR CARD ── */
+      .calendar-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+      }
+
+
+      /* ── MONTH HEADER ── */
+      .cal-header {
+        background: #2c5aa0;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.2rem 1.8rem;
+      }
+
+
+      .cal-header h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+      }
+
+
+      .cal-nav-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+
+
+      .cal-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.35);
+      }
+
+
+      /* ── DAY NAMES ── */
+      .cal-day-names {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        background: #eef1f8;
+      }
+
+
+      .cal-day-names span {
+        text-align: center;
+        padding: 0.65rem 0;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #2c5aa0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+
+      /* ── GRID ── */
+      .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        border-top: 1px solid #e8ecf4;
+      }
+
+
+      .cal-cell {
+        min-height: 105px;
+        border-right: 1px solid #e8ecf4;
+        border-bottom: 1px solid #e8ecf4;
+        padding: 0.5rem;
+        position: relative;
+      }
+
+
+      .cal-cell:nth-child(7n) {
+        border-right: none;
+      }
+
+
+      .cal-cell.other-month {
+        background: #fafbfd;
+      }
+
+
+      .cal-cell.other-month .day-num {
+        color: #c5ccd8;
+      }
+
+
+      .cal-cell.today .day-num {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+
+      .day-num {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #444;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.3rem;
+      }
+
+
+      /* ── EVENT CHIPS ── */
+      .event-chip {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 4px;
+        padding: 0.18rem 0.45rem;
+        font-size: 0.7rem;
+        font-weight: 500;
+        margin-bottom: 0.22rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        display: block;
+        transition:
+          opacity 0.2s,
+          transform 0.15s;
+      }
+
+
+      .event-chip:hover {
+        opacity: 0.85;
+        transform: translateX(2px);
+      }
+
+
+      /* ── POPUP ── */
+      .event-popup {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+        padding: 1.2rem 1.5rem;
+        min-width: 240px;
+        max-width: 300px;
+        border-top: 4px solid #667eea;
+      }
+
+
+      .event-popup.visible {
+        display: block;
+      }
+
+
+      .event-popup h4 {
+        color: #2c5aa0;
+        font-size: 1rem;
+        margin-bottom: 0.35rem;
+      }
+
+
+      .popup-date {
+        font-size: 0.76rem;
+        color: #888;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+
+      .event-popup p {
+        font-size: 0.87rem;
+        color: #555;
+        line-height: 1.5;
+      }
+
+
+      .popup-close {
+        position: absolute;
+        top: 0.6rem;
+        right: 0.8rem;
+        background: none;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        color: #aaa;
+      }
+
+
+      .popup-close:hover {
+        color: #333;
+      }
+
+
+      /* ── EVENT LIST BELOW CALENDAR ── */
+      .list-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 2rem 2.5rem;
+      }
+
+
+      .list-card .card-title {
+        color: #2c5aa0;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+
+      #eventList {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+      }
+
+
+      #eventList li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: #f4f6fb;
+        border-radius: 10px;
+        padding: 0.9rem 1.2rem;
+        border-left: 4px solid #667eea;
+        transition: box-shadow 0.2s;
+        flex-wrap: wrap;
+      }
+
+
+      #eventList li:hover {
+        box-shadow: 0 3px 12px rgba(102, 126, 234, 0.15);
+      }
+
+
+      #eventList li strong {
+        background: #2c5aa0;
+        color: white;
+        padding: 0.28rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+
+      .event-body {
+        flex: 1;
+        font-size: 0.93rem;
+        color: #333;
+      }
+
+
+      .empty-state {
+        text-align: center;
+        color: #aaa;
+        padding: 2rem 0;
+        font-size: 0.93rem;
+      }
+
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: white;
+          flex-direction: column;
+          padding: 2rem;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          display: none;
+        }
+
+
+        .nav-links.active {
+          display: flex;
+        }
+
+
+        .cal-cell {
+          min-height: 65px;
+          padding: 0.3rem;
+        }
+
+
+        .event-chip {
+          font-size: 0.62rem;
+        }
+
+
+        .list-card {
+          padding: 1.5rem 1.2rem;
+        }
+      }
+
+
+      @media (max-width: 480px) {
+        .event-chip {
+          display: none;
+        }
+
+
+        .cal-cell.has-event::after {
+          content: "•";
+          color: #667eea;
+          font-size: 1.3rem;
+          position: absolute;
+          bottom: 3px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header>
+      <nav>
+          <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/">Home</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/programs">Programs</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/user">Events</a></li>
+          <li><a href="/register">Get Involved</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="page-hero">
+      <h1>User Calendar</h1>
+      <p>Browse all upcoming REACT events and activities</p>
+    </section>
+
+
+    <!-- MAIN -->
+    <div class="container">
+      <!-- CALENDAR GRID -->
+      <div class="calendar-card">
+        <div class="cal-header">
+          <button class="cal-nav-btn" onclick="changeMonth(-1)">&#8249;</button>
+          <h2 id="calMonthYear"></h2>
+          <button class="cal-nav-btn" onclick="changeMonth(1)">&#8250;</button>
+        </div>
+        <div class="cal-day-names">
+          <span>Sun</span><span>Mon</span><span>Tue</span> <span>Wed</span
+          ><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+
+
+      <!-- EVENT LIST -->
+      <div class="list-card">
+        <div class="card-title" id="listTitle">📌 Events This Month</div>
+        <ul id="eventList">
+          <li class="empty-state">Loading events…</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- POPUP -->
+    <div class="event-popup" id="eventPopup">
+      <button class="popup-close" onclick="closePopup()">✕</button>
+      <div class="popup-date" id="popupDate"></div>
+      <h4 id="popupTitle"></h4>
+      <p id="popupDesc"></p>
+    </div>
+
+
+    <script>
+      // Mobile nav
+      document.getElementById("menuToggle").addEventListener("click", () => {
+        document.getElementById("navLinks").classList.toggle("active");
+      });
+
+
+      // Calendar state
+      const today = new Date();
+      let currentYear = today.getFullYear();
+      let currentMonth = today.getMonth();
+      let allEvents = [];
+
+
+      // ── ORIGINAL LOGIC (unchanged) ──
+      async function loadEvents() {
+        const res = await fetch("/calendar/events");
+        const events = await res.json();
+        allEvents = events;
+        renderCalendar();
+        renderEventList();
+      }
+
+
+      function renderEventList() {
+        const list = document.getElementById("eventList");
+        list.innerHTML = "";
+
+
+        const monthStr = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}`;
+        const monthEvents = allEvents.filter(
+          (ev) => ev.date && ev.date.startsWith(monthStr),
+        );
+
+
+        if (!monthEvents.length) {
+          list.innerHTML = '<li class="empty-state">No events this month.</li>';
+        } else {
+          monthEvents.forEach((event) => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <strong>${event.date}</strong>
+              <span class="event-body">${event.title}${event.description ? " — " + event.description : ""}</span>
+            `;
+            list.appendChild(li);
+          });
+        }
+      }
+
+
+      // ── CALENDAR RENDER ──
+      function renderCalendar() {
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        document.getElementById("calMonthYear").textContent =
+          `${monthNames[currentMonth]} ${currentYear}`;
+        document.getElementById("listTitle").textContent =
+          `📌 Events in ${monthNames[currentMonth]} ${currentYear}`;
+
+
+        const grid = document.getElementById("calGrid");
+        grid.innerHTML = "";
+
+
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(
+          currentYear,
+          currentMonth + 1,
+          0,
+        ).getDate();
+        const daysInPrev = new Date(currentYear, currentMonth, 0).getDate();
+        const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+
+
+        // Build event map keyed by date string
+        const eventMap = {};
+        allEvents.forEach((ev) => {
+          if (!eventMap[ev.date]) eventMap[ev.date] = [];
+          eventMap[ev.date].push(ev);
+        });
+
+
+        for (let i = 0; i < totalCells; i++) {
+          const cell = document.createElement("div");
+          cell.className = "cal-cell";
+
+
+          let dayNum,
+            dateStr,
+            isOther = false;
+
+
+          if (i < firstDay) {
+            dayNum = daysInPrev - firstDay + i + 1;
+            isOther = true;
+            const mo = currentMonth === 0 ? 12 : currentMonth;
+            const yr = currentMonth === 0 ? currentYear - 1 : currentYear;
+            dateStr = `${yr}-${String(mo).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+          } else if (i >= firstDay + daysInMonth) {
+            dayNum = i - firstDay - daysInMonth + 1;
+            isOther = true;
+            const mo = currentMonth === 11 ? 1 : currentMonth + 2;
+            const yr = currentMonth === 11 ? currentYear + 1 : currentYear;
+            dateStr = `${yr}-${String(mo).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+          } else {
+            dayNum = i - firstDay + 1;
+            dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+          }
+
+
+          if (isOther) cell.classList.add("other-month");
+
+
+          const isToday =
+            !isOther &&
+            dayNum === today.getDate() &&
+            currentMonth === today.getMonth() &&
+            currentYear === today.getFullYear();
+          if (isToday) cell.classList.add("today");
+
+
+          const numDiv = document.createElement("div");
+          numDiv.className = "day-num";
+          numDiv.textContent = dayNum;
+          cell.appendChild(numDiv);
+
+
+          if (eventMap[dateStr]) {
+            cell.classList.add("has-event");
+            eventMap[dateStr].forEach((ev) => {
+              const chip = document.createElement("div");
+              chip.className = "event-chip";
+              chip.textContent = ev.title;
+              chip.addEventListener("click", (e) => showPopup(e, ev));
+              cell.appendChild(chip);
+            });
+          }
+
+
+          grid.appendChild(cell);
+        }
+      }
+
+
+      function changeMonth(dir) {
+        currentMonth += dir;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        renderCalendar();
+        renderEventList();
+      }
+
+
+      function showPopup(e, ev) {
+        const popup = document.getElementById("eventPopup");
+        document.getElementById("popupDate").textContent = ev.date;
+        document.getElementById("popupTitle").textContent = ev.title;
+        document.getElementById("popupDesc").textContent = ev.description || "";
+        popup.classList.add("visible");
+        const x = Math.min(e.clientX + 12, window.innerWidth - 320);
+        const y = Math.min(e.clientY + 12, window.innerHeight - 180);
+        popup.style.left = x + "px";
+        popup.style.top = y + "px";
+        e.stopPropagation();
+      }
+
+
+      function closePopup() {
+        document.getElementById("eventPopup").classList.remove("visible");
+      }
+
+
+      document.addEventListener("click", closePopup);
+
+
+      loadEvents();
+    </script>
+  </body>
+</html>

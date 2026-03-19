@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PWD Profile - REACT</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana;
+            background: #b4c7eeff;
+            margin: 0;
+        }
+
+        /* ===== Header / Navbar ===== */
+        header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f2f4f7ff;
+        }
+
+        .nav-links {
+            margin-left: auto;
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        /* ===== Profile Form ===== */
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .btn {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #f2f4f7ff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== Navbar ===== -->
+    <header>
+        <nav>
+                <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+            <ul class="nav-links">
+                <li><a href="/pwd">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== Profile Form ===== -->
+    <div class="container">
+        <h2>My Profile</h2>
+        <p>Please fill your details carefully. This helps us suggest better jobs and scholarships.</p>
+
+        <form action="/profile" method="POST">
+
+            <label>Full Name</label>
+            <input type="text" name="name" required>
+
+            <label>Age</label>
+            <input type="number" name="age">
+
+            <label>Gender</label>
+            <div style="margin-top:8px;">
+                <input type="radio" name="gender" value="Male"> Male
+                &nbsp;&nbsp;
+                <input type="radio" name="gender" value="Female"> Female
+                &nbsp;&nbsp;
+                <input type="radio" name="gender" value="Other"> Other
+            </div>
+
+            <label>Date of Birth</label>
+            <input type="date" name="dob">
+
+            <label>Disability Type</label>
+            <select name="disability"
+                style="width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #ccc;">
+                <option value="">-- Select Disability --</option>
+                <option>Locomotor Disability</option>
+                <option>Visual Impairment</option>
+                <option>Hearing Impairment</option>
+                <option>Speech and Language Disability</option>
+                <option>Intellectual Disability</option>
+                <option>Autism Spectrum Disorder</option>
+                <option>Specific Learning Disability</option>
+                <option>Mental Illness</option>
+                <option>Multiple Disabilities</option>
+                <option>Acid Attack Victim</option>
+                <option>Cerebral Palsy</option>
+                <option>Muscular Dystrophy</option>
+                <option>Leprosy Cured</option>
+                <option>Blood Disorder (Thalassemia, Hemophilia)</option>
+                <option>Chronic Neurological Condition</option>
+                <option>Low Vision</option>
+                <option>Hard of Hearing</option>
+                <option>Blindness</option>
+            </select>
+
+            <label>Disability Percentage</label>
+            <input type="number" name="percentage">
+
+            <label>Location</label>
+            <input type="text" name="location">
+
+            <label>Qualification</label>
+            <input type="text" name="qualification">
+
+            <label>Exprience Level</label>
+            <input type="text" name="ExprienceLevel">
+
+            <label>JobExpectations</label>
+            <input type="text" name="JobExpectations">
+
+            <label>Preferred job location</label>
+            <input type="text" name="Joblocation">
+
+
+
+            <button type="submit" class="btn">Save Profile</button>
+
+        </form>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        © 2026 REACT | PWD Profile
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>People with Disabilities - Career Services | REACT</title>
+
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f6fb;
+        color: #333;
+      }
+
+
+      /* Header */
+      header {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+      }
+
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c5aa0;
+      }
+
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+
+      .nav-links a:hover {
+        color: #2c5aa0;
+      }
+
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+
+      .menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: #333;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+
+      /* Hero Section with Image */
+      .hero {
+        position: relative;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        text-align: center;
+        padding: 3rem 1rem;
+        overflow: hidden;
+      }
+
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&h=600&fit=crop")
+          center/cover;
+        opacity: 0.2;
+        z-index: 0;
+      }
+
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+
+      .hero .subtitle {
+        font-size: 1.5rem;
+        font-weight: 300;
+      }
+
+
+      /* Intro Section */
+      .intro-section {
+        background: white;
+        padding: 3rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .intro-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: justify;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #333;
+      }
+
+
+      /* Marquee Section */
+      .marquee-section {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        padding: 1rem 0;
+        overflow: hidden;
+        margin-bottom: 2rem;
+      }
+
+
+      .marquee {
+        display: flex;
+        animation: scroll 30s linear infinite;
+        white-space: nowrap;
+      }
+
+
+      .marquee-content {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        padding: 0 2rem;
+      }
+
+
+      .marquee-content span {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+
+      .marquee-content span::before {
+        content: "★";
+        color: #ffd700;
+      }
+
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+
+      /* Image Gallery Section */
+      .image-gallery {
+        background: #fff;
+        padding: 4rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .gallery-title {
+        text-align: center;
+        color: #2c5aa0;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+      }
+
+
+      .image-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+
+      .image-box {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        height: 300px;
+      }
+
+
+      .image-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      }
+
+
+      .image-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+      }
+
+
+      .image-box:hover img {
+        transform: scale(1.1) rotate(2deg);
+      }
+
+
+      .image-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        color: white;
+        padding: 1.5rem 1rem 1rem;
+        transform: translateY(100%);
+        transition: transform 0.3s;
+      }
+
+
+      .image-box:hover .image-caption {
+        transform: translateY(0);
+      }
+
+
+      /* Rotating Images Section */
+      .rotating-section {
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        padding: 4rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .rotating-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+
+      .rotating-title {
+        color: #2c5aa0;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+      }
+
+
+      .rotating-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 3rem;
+        justify-items: center;
+      }
+
+
+      .rotating-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: rotate3d 8s infinite ease-in-out;
+        transform-style: preserve-3d;
+      }
+
+
+      .rotating-image:nth-child(2) {
+        animation-delay: 1s;
+      }
+
+
+      .rotating-image:nth-child(3) {
+        animation-delay: 2s;
+      }
+
+
+      .rotating-image:nth-child(4) {
+        animation-delay: 3s;
+      }
+
+
+      .rotating-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+
+      @keyframes rotate3d {
+        0%,
+        90% {
+          transform: rotateY(0deg) rotateX(0deg);
+        }
+        25% {
+          transform: rotateY(180deg) rotateX(0deg);
+        }
+        50% {
+          transform: rotateY(180deg) rotateX(180deg);
+        }
+        75% {
+          transform: rotateY(0deg) rotateX(180deg);
+        }
+      }
+
+
+      /* Main Content Section */
+      .content-container {
+        max-width: 1200px;
+        margin: 0 auto 3rem;
+        padding: 0 2rem;
+      }
+
+
+      .content-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+      }
+
+
+      .content-card h2 {
+        color: #2c5aa0;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid #667eea;
+        text-align: center;
+      }
+
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+
+      .service-item {
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+
+      .service-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+
+      .service-item h3 {
+        color: #764ba2;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+
+      .service-item h3::before {
+        content: "✓";
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 30px;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+
+      .service-item p {
+        line-height: 1.8;
+        color: #333;
+        text-align: justify;
+        flex-grow: 1;
+      }
+
+
+      /* Contact CTA Section */
+      .cta-section {
+        background: linear-gradient(135deg, #000000, #4b0082, #ffffff);
+        padding: 4rem 2rem;
+        text-align: center;
+      }
+
+
+      .cta-section h2 {
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+
+      .cta-section p {
+        color: white;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+
+      .cta-btn {
+        display: inline-block;
+        padding: 1rem 3rem;
+        background: white;
+        color: #4b0082;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        border: 2px solid white;
+        transition: all 0.3s;
+      }
+
+
+      .cta-btn:hover {
+        background: transparent;
+        color: white;
+      }
+
+
+      /* Stats Section */
+      .stats-container {
+        background: white;
+        padding: 3rem 2rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .stats-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        text-align: center;
+      }
+
+
+      .stat-item {
+        padding: 1.5rem;
+      }
+
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+      }
+
+
+      .stat-label {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+
+      /* Footer */
+      .footer {
+        background: #2c3e50;
+        color: #bdc3c7;
+        text-align: center;
+        padding: 1.5rem;
+      }
+
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: white;
+          flex-direction: column;
+          padding: 2rem;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          display: none;
+        }
+
+
+        .nav-links.active {
+          display: flex;
+        }
+
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+
+        .hero .subtitle {
+          font-size: 1.2rem;
+        }
+
+
+        .intro-content {
+          text-align: left;
+          font-size: 1rem;
+        }
+
+
+        .gallery-title,
+        .rotating-title {
+          font-size: 1.8rem;
+        }
+
+
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+
+
+        .rotating-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2rem;
+        }
+
+
+        .rotating-image {
+          width: 150px;
+          height: 150px;
+        }
+
+
+        .content-card {
+          padding: 2rem;
+        }
+
+
+        .content-card h2 {
+          font-size: 1.5rem;
+        }
+
+
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
+
+
+        .service-item p {
+          text-align: left;
+        }
+
+
+        .cta-section h2 {
+          font-size: 1.8rem;
+        }
+
+
+        .stat-number {
+          font-size: 2rem;
+        }
+
+
+        .marquee-content span {
+          font-size: 1rem;
+        }
+      }
+
+
+      @media (max-width: 480px) {
+        nav {
+          padding: 1rem;
+        }
+
+
+        .hero {
+          padding: 2rem 1rem;
+        }
+
+
+        .intro-section {
+          padding: 2rem 1rem;
+        }
+
+
+        .content-container {
+          padding: 0 1rem;
+        }
+
+
+        .content-card {
+          padding: 1.5rem;
+        }
+
+
+        .service-item {
+          padding: 1.5rem;
+        }
+
+
+        .rotating-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav>
+          <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/">Home</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/programs">Programs</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/user">Events</a></li>
+          <li><a href="/register">Get Involved</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>People with Disabilities</h1>
+        <p class="subtitle">Unlock your Career Potential</p>
+      </div>
+    </section>
+
+
+    <!-- Marquee Section -->
+    <section class="marquee-section">
+      <div class="marquee">
+        <div class="marquee-content">
+          <span>75+ Partner Employers</span>
+          <span>25+ Training Institutes</span>
+          <span>100% Job Assurance</span>
+          <span>Career Guidance</span>
+          <span>Training</span>
+          <span>Internships</span>
+          <span>Placement Assistance</span>
+          <span>Self Employement</span>
+        </div>
+        <div class="marquee-content">
+          <span>75+ Partner Employers</span>
+          <span>25+ Training Institutes</span>
+          <span>100% Job Assurance</span>
+          <span>Career Guidance</span>
+          <span>Training</span>
+          <span>Internships</span>
+          <span>Placement Assistance</span>
+          <span>Self Employement</span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Intro Section -->
+    <section class="intro-section">
+      <div class="intro-content">
+        <p>
+          If you are a person with a disability in the Madurai area, REACT is
+          here to support your career journey. We have connections with over 75
+          local employers who value diverse skills and perspectives. Our
+          experienced team understands their requirements and is committed to
+          providing personalized guidance, comprehensive training, and effective
+          placement assistance to help you achieve your employment goals.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- Stats Section -->
+    <section class="stats-container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">75+</div>
+          <div class="stat-label">Partner Employers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">25+</div>
+          <div class="stat-label">Training Institutes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Personalized Support</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Image Gallery Section -->
+    <section class="image-gallery">
+      <h2 class="gallery-title">Our Training Programs</h2>
+      <div class="image-grid">
+        <div class="image-box">
+          <img src="/images/react9.jpeg" alt="Career Guidance" />
+          <div class="image-caption">
+            <h3>Career Guidance</h3>
+            <p>Personalized counseling</p>
+          </div>
+        </div>
+        <div class="image-box">
+          <img src="/images/react12.jpeg" alt="Professional Development" />
+          <div class="image-caption">
+            <h3>Professional Development</h3>
+            <p>Building your future</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Main Content -->
+    <section class="content-container">
+      <div class="content-card">
+        <h2>Our Comprehensive Services</h2>
+
+
+        <div class="services-grid">
+          <!-- Career Guidance -->
+          <div class="service-item">
+            <h3>Career Guidance</h3>
+            <p>
+              Personalized advice and support to explore career options. REACT
+              counselors carefully assess candidates' academic performance and
+              interests to offer tailored career advice. We guide them on
+              suitable degrees to pursue and relevant job applications. Our
+              dedicated mentors provide ongoing support, staying in constant
+              touch with candidates to monitor their progress and help them stay
+              on track.
+            </p>
+          </div>
+
+
+          <!-- Skill Training -->
+          <div class="service-item">
+            <h3>Skill Training</h3>
+            <p>
+              REACT provides access to a wide range of vocational training
+              programs including Hospitality, Plumbing, Electrical, Mechanic,
+              Computer, Food Processing, Furniture Making, and Tailoring. We
+              have strong working relationships with leading training institutes
+              in Madurai, as well as the District Skill Training Office and
+              other non-profit organizations. This extensive network includes
+              over 25 institutes offering specialized training for people with
+              disabilities in the Madurai region.
+            </p>
+          </div>
+
+
+          <!-- Placement Assistance -->
+          <div class="service-item">
+            <h3>Placement Assistance</h3>
+            <p>
+              Connecting individuals with over 75 employers in Madurai who value
+              diverse talent. Before placement, REACT thoroughly evaluates
+              candidates' job readiness, assessing skills such as typing,
+              computer literacy, written and oral English communication, report
+              writing, and other vital soft skills. Following this assessment,
+              we prepare them for the job market through counseling,
+              professional resume building, and comprehensive interview
+              preparation. Once ready, candidates are connected directly with
+              companies for interviews.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Contact CTA Section -->
+    <section class="cta-section">
+      <h2>Contact Us</h2>
+      <p>
+        Ready to start your career journey? Get in touch with us today and let
+        us help you unlock your potential.
+      </p>
+      <a href="/contact" class="cta-btn">Get in Touch</a>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>
+        © 2026 Resource Education And Charitable Trust - Madurai. All rights
+        reserved.
+      </p>
+    </footer>
+
+
+    <script>
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+
+
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            navLinks.classList.remove("active");
+          }
+        });
+      });
+
+
+      // Add scroll effect to header
+      let lastScroll = 0;
+      const header = document.querySelector("header");
+
+
+      window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+
+        if (currentScroll <= 0) {
+          header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+        } else {
+          header.style.boxShadow = "0 4px 20px rgba(0,0,0,0.15)";
+        }
+
+
+        lastScroll = currentScroll;
+      });
+
+
+      // Add animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+
+      document.querySelectorAll(".service-item").forEach((item) => {
+        item.style.opacity = "0";
+        item.style.transform = "translateY(20px)";
+        item.style.transition = "opacity 0.6s, transform 0.6s";
+        observer.observe(item);
+      });
+    </script>
+  </body>
+</html>
+

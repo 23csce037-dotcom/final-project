@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employer Profile - REACT</title>
+
+<style>
+body{
+font-family:"Segoe UI";
+background:#f4f6f9;
+margin:0;
+}
+
+header{
+background:linear-gradient(135deg,#667eea,#764ba2);
+padding:15px;
+color:white;
+}
+
+nav{
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.container{
+max-width:700px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:600;
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+margin-top:20px;
+width:100%;
+padding:12px;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+<div style="display:flex; align-items:center; gap:8px;">
+<img 
+src="/images/logo.jpeg"
+alt="REACT Logo"
+style="height:40px; width:auto;"
+>
+
+<h2 style="margin:0;">REACT</h2>
+</div>
+
+<a href="/employer" style="color:white;text-decoration:none;">Dashboard</a>
+</nav>
+</header>
+
+<div class="container">
+
+<h2 style="text-align:center;">
+<%= employer ? "Update Profile" : "Create Profile" %>
+</h2>
+
+<form action="/employer/profile" method="POST">
+
+<label>User Name</label>
+<input type="text" name="name" value="<%= employer?.name || '' %>" required>
+
+<label>Age</label>
+<input type="number" name="age" value="<%= employer?.age || '' %>">
+
+<label>Company Name</label>
+<input type="text" name="companyname" value="<%= employer?.companyname || '' %>" required>
+
+<label>Company Email</label>
+<input type="email" name="companyemail" value="<%= employer?.companyemail || '' %>" required>
+
+<label>Contact</label>
+<input type="text" name="phone" value="<%= employer?.phone || '' %>">
+
+<label>Company Type</label>
+<input type="text" name="companytype" value="<%= employer?.companytype || '' %>">
+
+<label>Domain</label>
+<input type="text" name="domain" value="<%= employer?.domain || '' %>">
+
+<label>Company Size</label>
+<input type="number" name="companysize" value="<%= employer?.companysize || '' %>">
+
+<label>Company Location</label>
+<input type="text" name="companylocation" value="<%= employer?.companylocation || '' %>">
+
+<label>Official Website</label>
+<input type="text" name="website" value="<%= employer?.website || '' %>">
+
+<label>Description</label>
+<textarea name="description"><%= employer?.description || '' %></textarea>
+
+<button type="submit">
+<%= employer ? "Update Profile" : "Save Profile" %>
+</button>
+
+</form>
+</div>
+
+</body>
+</html>

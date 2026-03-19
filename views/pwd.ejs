@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PWD Dashboard - REACT</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana;
+            background: #b4c7eeff;
+            margin: 0;
+        }
+
+        /* ===== Header / Navbar ===== */
+        header{
+        background:#ffffff;
+        padding:0.5rem 0;
+        box-shadow:0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav{
+        max-width:1200px;
+        margin:auto;
+        display:flex;
+        align-items:center;
+        padding:10px 20px;
+        }
+
+        .logo{
+        font-size:1.5rem;
+        font-weight:bold;
+        color:#2c5aa0;
+        }
+
+        .nav-links{
+        margin-left:auto;
+        display:flex;
+        gap:30px;
+        list-style:none;
+        }
+
+        .nav-links a{
+        text-decoration:none;
+        color:#333;
+        font-weight:500;
+        font-size:16px;
+        }
+
+        .nav-links a:hover{
+        color:#2c5aa0;
+        }
+        /* ====== HERO SECTION ===== */
+            .hero{
+            background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            color:white;
+            padding:5rem 2rem;
+            text-align:center;
+            }
+
+            .hero h1{
+            font-size:2.5rem;
+            margin-bottom:1rem;
+            }
+        /* ===== Dashboard Layout ===== */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        /* ===== Cards ===== */
+        .card-grid{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:25px;
+        margin-top:30px;
+        }
+        @media (max-width:900px){
+        .card-grid{
+        grid-template-columns:1fr;
+        }
+        }
+
+        .card{
+        background:white;
+        padding:30px;
+        border-radius:12px;
+        box-shadow:0 4px 20px rgba(0,0,0,0.1);
+        transition:0.3s;
+        min-height:180px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .exit-btn{
+        padding:6px 14px;
+        background:linear-gradient(135deg,#667eea,#764ba2);
+        color:white;
+        text-decoration:none;
+        border-radius:6px;
+        font-size:14px;
+        font-weight:500;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        transition:0.3s;
+        }
+
+        .exit-btn:hover{
+        background:linear-gradient(135deg,#5a6de0,#6a3fa0);
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #f2f4f7ff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== Header ===== -->
+    <header>
+        <nav>
+       <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+        <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/pwd">Dashboard</a></li>
+
+        <li>
+        <a href="/logout" class="exit-btn">
+        Logout
+        </a>
+        </li>
+
+        </ul>
+
+        </nav>
+    </header>
+
+    <section class="hero">
+    <h1>PWD Dashboard</h1>
+    <p>Welcome to REACT. Explore opportunities, manage your profile and grow your career.</p>
+    </section>
+
+    <!-- ===== Dashboard Content ===== -->
+    <div class="dashboard-container">
+
+        <div class="card-grid">
+
+            <div class="card">
+                <h3>My Profile</h3>
+                <p>
+                    View and Update Personal Details 
+                    It is Mandatory to fill your details !!!
+                </p>
+                 <a href="/profile/view" class="btn">View /Update</a>
+            </div>
+
+            <div class="card">
+                <h3>Resume & Skills</h3>
+                <p>
+                    Upload resume, add qualification, experience level
+                    and technical skills.
+                </p>
+                <a href="/resume" class="btn">Manage Resume</a>
+            </div>
+
+            <div class="card">
+                <h3>Job Opportunities</h3>
+                <p>
+                    View jobs based on your skills, job expectations
+                    and preferred location.
+                </p>
+                <a href="/jobs" class="btn">View Jobs</a>
+            </div>
+
+            <div class="card">
+                <h3>Scholarships</h3>
+                <p>
+                    Check available scholarships and financial support
+                    for PWD students.
+                </p>
+                <a href="/scholarships" class="btn">View Scholarships</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        © 2026 REACT | PWD Dashboard
+    </footer>
+
+</body>
+
+</html>

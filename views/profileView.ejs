@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Profile Details</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+        }
+
+        /* ================= NAVBAR (DASHBOARD STYLE) ================= */
+        .navbar {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* ================= CONTENT ================= */
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #2c5aa0;
+        }
+
+        table {
+            width: 65%;
+            margin: 35px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        th,
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            text-align: left;
+            width: 35%;
+        }
+
+        tr:hover {
+            background: #f8f9ff;
+        }
+
+        /* ================= BUTTON ================= */
+        .btn {
+            display: block;
+            width: 220px;
+            margin: 30px auto 50px;
+            padding: 12px;
+            text-align: center;
+            background: #764ba2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #5a3c91;
+            transform: translateY(-2px);
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 768px) {
+            table {
+                width: 90%;
+            }
+
+            .navbar {
+                padding: 0 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <!-- ================= NAVBAR ================= -->
+    <div class="navbar">
+        <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/pwd">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <h2 style="text-align:center;">My Profile Details</h2>
+
+    <table>
+        <tr>
+            <th>Full Name</th>
+            <td>
+                <%= profile.name %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Age</th>
+            <td>
+                <%= profile.age %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Gender</th>
+            <td>
+                <%= profile.gender %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Date of Birth</th>
+            <td>
+                <%= profile.dob ? profile.dob.toDateString() : '' %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Disability Type</th>
+            <td>
+                <%= profile.disability %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Disability %</th>
+            <td>
+                <%= profile.percentage %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Location</th>
+            <td>
+                <%= profile.location %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Qualification</th>
+            <td>
+                <%= profile.qualification %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Experience Level</th>
+            <td>
+                <%= profile.ExprienceLevel %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Job Expectations</th>
+            <td>
+                <%= profile.JobExpectations %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Preferred Job Location</th>
+            <td>
+                <%= profile.Joblocation %>
+            </td>
+        </tr>
+    </table>
+
+    <a href="/profile" class="btn">Edit Profile</a>
+
+</body>
+
+</html>
+
+
+

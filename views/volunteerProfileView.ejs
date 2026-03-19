@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>My Volunteer Profile</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6fa;
+margin:0;
+}
+
+header{
+background:linear-gradient(135deg,#667eea,#764ba2);
+padding:15px;
+color:white;
+}
+
+/* ================= NAVBAR (DASHBOARD STYLE) ================= */
+        .navbar {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            color: white;
+        }
+
+
+.logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+table{
+width:65%;
+margin:40px auto;
+border-collapse:collapse;
+background:white;
+box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+th{
+background:#667eea;
+color:white;
+width:35%;
+}
+
+.btn{
+display:block;
+width:200px;
+margin:30px auto;
+padding:12px;
+background:#764ba2;
+color:white;
+text-align:center;
+text-decoration:none;
+border-radius:6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="navbar">
+        <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/volunteer">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</header>
+
+<h2 style="text-align:center;">My Volunteer Profile</h2>
+<table>
+<tr>
+<th>Full Name</th>
+<td><%= profile.fullName %></td>
+</tr>
+
+<tr>
+<th>Email</th>
+<td><%= profile.email %></td>
+</tr>
+
+<tr>
+<th>Age</th>
+<td><%= profile.age %></td>
+</tr>
+
+<tr>
+<th>Date of Birth</th>
+<td><%= profile.dob ? profile.dob.toDateString() : '' %></td>
+</tr>
+
+<tr>
+<th>Gender</th>
+<td><%= profile.gender %></td>
+</tr>
+
+<tr>
+<th>Qualification</th>
+<td><%= profile.qualification %></td>
+</tr>
+
+<tr>
+<th>Previously Volunteered</th>
+<td><%= profile.previousVolunteer %></td>
+</tr>
+
+<tr>
+<th>Volunteer Experience</th>
+<td><%= profile.volunteerExperience %></td>
+</tr>
+
+</table>
+
+<a href="/profile/volunteer/profile/edit" class="btn">Edit Profile</a>
+
+</body>
+</html>

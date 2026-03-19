@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Volunteer Management - REACT</title>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+
+body{
+font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+background:#f5f6f8;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/* HEADER */
+header{
+background:linear-gradient(135deg,#667eea,#764ba2);
+padding:0.5rem 0;
+box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+nav{
+max-width:1200px;
+margin:auto;
+display:flex;
+align-items:center;
+padding:10px 20px;
+}
+
+.logo{
+font-size:1.5rem;
+font-weight:bold;
+color:#f2f4f7;
+}
+
+.nav-links{
+margin-left:auto;
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+font-weight:500;
+font-size:16px;
+}
+
+/* PAGE TITLE */
+.page-title{
+text-align:center;
+margin-top:50px;
+color:#2c5aa0;
+}
+
+/* CARD SECTION */
+.container{
+max-width:1100px;
+margin:50px auto;
+display:flex;
+gap:30px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.card{
+background:white;
+width:280px;
+padding:30px;
+border-radius:14px;
+box-shadow:0 6px 32px rgba(102,126,234,0.2);
+text-align:center;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h2{
+color:#2c5aa0;
+margin-bottom:12px;
+}
+
+.card p{
+font-size:14px;
+color:#555;
+margin-bottom:18px;
+}
+
+.card a{
+display:inline-block;
+padding:10px 22px;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+text-decoration:none;
+border-radius:20px;
+font-size:14px;
+font-weight:600;
+}
+
+.main-content{
+flex:1;
+}
+
+/* FOOTER */
+footer{
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:#f2f4f7;
+text-align:center;
+padding:20px 0;
+margin-top:60px;
+font-size:13px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<nav>
+<div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+<ul class="nav-links">
+<li><a href="/">Home</a></li>
+<li><a href="/admin">Dashboard</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
+
+</nav>
+</header>
+
+<main class="main-content">
+
+<h1 class="page-title">Volunteer Management</h1>
+
+<div class="container">
+
+<div class="card">
+<h2>Volunteer Profiles</h2>
+<p>View all registered volunteers details</p>
+<a href="/admin/volunteers/profiles">Open</a>
+</div>
+
+<div class="card">
+<h2> Assign Task Volunteers </h2>
+<p>View all volunteers and assign task </p>
+<a href="/admin/assign-task">Assign Task</a>
+</div>
+
+<div class="card">
+<h2>Interview Applied Volunteers</h2>
+<p>View volunteers who applied for interviews</p>
+<a href="/admin/volunteers/interviews">Open</a>
+</div>
+
+</div>
+
+</main>
+
+<footer>
+© 2026 REACT | Admin - Volunteer Management
+</footer>
+
+</body>
+</html>

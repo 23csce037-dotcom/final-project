@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employer Candidate Profiles - REACT</title>
+
+<!-- Bootstrap (only for grid/cards) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+line-height:1.6;
+color:#333;
+}
+
+/* ================= HEADER ================= */
+
+header{
+background:#ffffff;
+padding:0.5rem 0;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav{
+max-width:1200px;
+margin:auto;
+display:flex;
+align-items:center;
+padding:10px 20px;
+}
+
+.logo{
+font-size:1.5rem;
+font-weight:bold;
+color:#2c5aa0;
+}
+
+.nav-links{
+margin-left:auto;
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+.nav-links a{
+text-decoration:none;
+color:#333;
+font-weight:500;
+font-size:16px;
+}
+
+.nav-links a:hover{
+color:#2c5aa0;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+color:white;
+padding:5rem 2rem;
+text-align:center;
+}
+
+.hero h1{
+font-size:2.5rem;
+margin-bottom:1rem;
+}
+
+/* ================= LOGOUT BUTTON ================= */
+
+.exit-btn{
+padding:6px 14px;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:#ffffff;
+text-decoration:none;
+border-radius:6px;
+font-size:14px;
+font-weight:500;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:0.3s;
+}
+
+.exit-btn:hover{
+background:linear-gradient(135deg,#5a6de0,#6a3fa0);
+}
+
+/* ================= CONTENT ================= */
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:2rem;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:#f2f4f7;
+text-align:center;
+padding:20px 0;
+margin-top:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+<nav>
+
+<div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+<ul class="nav-links">
+<li><a href="/">Home</a></li>
+<li><a href="/employer">Dashboard</a></li>
+
+<li>
+<a href="/logout" class="exit-btn">
+Logout
+</a>
+</li>
+
+</ul>
+
+</nav>
+</header>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+<h1>Candidate Profiles</h1>
+<p>
+Explore detailed information of candidates.<br>
+Kindly contact the Placement Officer for interview or shortlisting.<br>
+Placement Officer: 9780654321
+</p>
+</section>
+
+<!-- ================= CONTENT ================= -->
+
+<div class="container">
+
+<!-- Search Bar -->
+
+<form method="GET" action="/candidate-profile" class="mb-4 d-flex justify-content-start">
+<div class="input-group" style="max-width:450px;">
+<input
+type="text"
+name="search"
+class="form-control form-control-sm"
+placeholder="Search candidates by name, skills or location..."
+value="<%= search %>"
+>
+
+<button class="btn btn-primary btn-sm">
+Search
+</button>
+</div>
+</form>
+
+<div class="row">
+
+<% candidates.forEach(candidate => { %>
+
+<div class="col-md-4 mb-4">
+
+<div class="card shadow-sm p-3">
+
+<h5><%= candidate.profile.name %></h5>
+
+<p><strong>Age:</strong> <%= candidate.profile.age %></p>
+
+<p><strong>Disability:</strong> <%= candidate.profile.disability %></p>
+
+<p><strong>Location:</strong> <%= candidate.profile.location %></p>
+
+<p><strong>Experience:</strong> <%= candidate.experience %></p>
+
+<p>
+<strong>Skills:</strong>
+<%= candidate.skills ? candidate.skills.join(", ") : "N/A" %>
+</p>
+
+<a
+href="/candidate-profile/<%= candidate.profile._id %>"
+class="btn btn-sm mt-2"
+style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;"
+>
+View Profile
+</a>
+
+</div>
+
+</div>
+
+<% }) %>
+
+</div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+© 2026 REACT | Employer Dashboard
+</footer>
+
+</body>
+</html>
+

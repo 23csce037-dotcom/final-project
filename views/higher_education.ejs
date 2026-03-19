@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Higher Education Services – REACT</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #3f5fc0;
+        --blue-dark: #2d4aad;
+        --grad: linear-gradient(135deg, #4a6bd6 0%, #7b4fc9 100%);
+        --grad-hero: linear-gradient(135deg, #4a6bd6 0%, #9b59c9 100%);
+        --white: #ffffff;
+        --bg: #f8f9fc;
+        --text: #333344;
+        --text-muted: #666680;
+        --border: rgba(63, 95, 192, 0.1);
+      }
+
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+
+      body {
+        font-family: "Nunito Sans", "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 48px;
+        height: 64px;
+        box-shadow: 0 2px 12px rgba(63, 95, 192, 0.08);
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+      .nav-name {
+        font-size: 22px;
+        color: var(--blue-dark);
+        font-weight: 800;
+        letter-spacing: 1px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 13.5px;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--blue);
+      }
+
+
+      /* HERO */
+      .hero {
+        min-height: 38vh;
+        background: var(--grad-hero);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        padding: 100px 48px 48px;
+        text-align: center;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 50% at 15% 25%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse 50% 60% at 85% 75%,
+            rgba(255, 255, 255, 0.06) 0%,
+            transparent 55%
+          );
+      }
+      .hero-grid-bg {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
+      .hero-eyebrow {
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 8px;
+        position: relative;
+        font-weight: 700;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 4vw, 48px);
+        font-weight: 800;
+        color: var(--white);
+        line-height: 1.1;
+        position: relative;
+      }
+      .hero-sub {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.9);
+        margin-top: 10px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        position: relative;
+      }
+
+
+      /* INTRO */
+      .intro {
+        background: var(--white);
+        padding: 40px 80px;
+        border-bottom: 1px solid var(--border);
+      }
+      .intro p {
+        max-width: 960px;
+        margin: 0 auto;
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--text);
+        font-weight: 400;
+      }
+
+
+      /* SERVICES GRID */
+      .services {
+        padding: 56px 80px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+
+      /* SERVICE CARD */
+      .svc-card {
+        background: var(--white);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        overflow: hidden;
+        box-shadow: 0 2px 16px rgba(63, 95, 192, 0.07);
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s ease;
+      }
+      .svc-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+
+      .svc-img {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+      }
+      .svc-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+      }
+      .svc-card:hover .svc-img img {
+        transform: scale(1.04);
+      }
+
+
+      .svc-body {
+        padding: 24px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+
+      .svc-title {
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--blue-dark);
+        border-left: 3px solid;
+        border-image: var(--grad) 1;
+        padding-left: 10px;
+      }
+      .svc-divider {
+        width: 32px;
+        height: 3px;
+        border-radius: 2px;
+        background: var(--grad);
+      }
+      .svc-text {
+        font-size: 14px;
+        line-height: 1.85;
+        color: var(--text);
+        font-weight: 400;
+      }
+
+
+      /* CTA */
+      .contact-bar {
+        background: var(--grad);
+        text-align: center;
+        padding: 52px 48px;
+        position: relative;
+        overflow: hidden;
+      }
+      .contact-bar::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 60% 80% at 50% 50%,
+          rgba(255, 255, 255, 0.08) 0%,
+          transparent 70%
+        );
+      }
+      .contact-bar h2 {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--white);
+        margin-bottom: 10px;
+        position: relative;
+      }
+      .contact-bar p {
+        font-size: 14.5px;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 24px;
+        position: relative;
+      }
+      .cta-btn {
+        display: inline-block;
+        background: var(--white);
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 13px 36px;
+        border-radius: 40px;
+        position: relative;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+      }
+
+
+      footer {
+        background: var(--white);
+        text-align: center;
+        padding: 18px 48px;
+        font-size: 13px;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+      }
+      footer strong {
+        color: var(--blue-dark);
+        font-weight: 700;
+      }
+
+
+      @media (max-width: 860px) {
+        nav {
+          padding: 0 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .intro {
+          padding: 32px 24px;
+        }
+        .services {
+          grid-template-columns: 1fr;
+          padding: 36px 20px;
+          gap: 24px;
+        }
+      }
+      .nav-logo{
+  height:40px;
+  width:auto;
+}
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a class="nav-brand" href="#">
+        <img src="/images/logo.jpeg" alt="REACT Logo" class="nav-logo">
+        <span class="nav-name">REACT</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="#">Services ▾</a></li>
+        <li><a href="#">Programs ▾</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Get Involved</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid-bg"></div>
+      <p class="hero-eyebrow">REACT — Madurai</p>
+      <h1>Higher Education Services</h1>
+      <p class="hero-sub">Empowering Students in Higher Education</p>
+    </section>
+
+
+    <!-- INTRO -->
+    <div class="intro">
+      <p>
+        Recognizing the aspirations of students with disabilities pursuing
+        higher education in Madurai, our Disability Support Program provides
+        crucial resources and guidance to help them succeed academically and
+        professionally. We offer a range of services designed to address their
+        unique needs and facilitate their journey towards independence.
+      </p>
+    </div>
+
+
+    <!-- SERVICES -->
+    <section class="services">
+      <!-- Job Skill Training -->
+      <div class="svc-card">
+        <div class="svc-img">
+          <img
+            src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=700&q=80"
+            alt="Job Skill Training"
+          />
+        </div>
+        <div class="svc-body">
+          <div class="svc-title">Job Skill Training</div>
+          <div class="svc-divider"></div>
+          <p class="svc-text">
+            To support the career aspirations of graduates with disabilities,
+            REACT has partnered with reputable local institutions in Madurai to
+            offer specialized coaching for Tamil Nadu Public Service Commission
+            (TNPSC) and Bank examinations. This initiative aims to equip
+            students with the necessary skills and knowledge to successfully
+            compete for government sector jobs.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- Campus Placements -->
+      <div class="svc-card">
+        <div class="svc-img">
+          <img
+            src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=700&q=80"
+            alt="Campus Placements"
+          />
+        </div>
+        <div class="svc-body">
+          <div class="svc-title">Campus Placements</div>
+          <div class="svc-divider"></div>
+          <p class="svc-text">
+            Recognizing the importance of practical experience in shaping future
+            careers, REACT has recently launched an internship assistance
+            program. We actively collaborate with various organizations to
+            identify and secure valuable internship opportunities for students
+            with disabilities, providing them with real-world exposure and
+            enhancing their employability.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- Higher Education Assistance -->
+      <div class="svc-card">
+        <div class="svc-img">
+          <img
+            src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=700&q=80"
+            alt="Higher Education Assistance"
+          />
+        </div>
+        <div class="svc-body">
+          <div class="svc-title">Higher Education Assitance</div>
+          <div class="svc-divider"></div>
+          <p class="svc-text">
+            REACT collaborates closely with the Help The Blind Foundation to
+            facilitate education sponsorships for students with visual
+            impairments in Madurai. We as volunteers of HTBF manage the
+            necessary paperwork and provide strong recommendations to HTBF. In
+            2024 and 2025 alone, we have successfully supported the distribution
+            of sponsorships to 80 deserving students across 11 colleges in
+            Madurai.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- Assistive Technology Tools -->
+      <div class="svc-card">
+        <div class="svc-img">
+          <img
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=700&q=80"
+            alt="Assistive Technology Tools"
+          />
+        </div>
+        <div class="svc-body">
+          <div class="svc-title">Assistive Technology Tools</div>
+          <div class="svc-divider"></div>
+          <p class="svc-text">
+            We understand the role of assistive technology in enabling students
+            with disabilities to thrive in their academic pursuits.
+          </p>
+          <p class="svc-text">
+            REACT has established partnerships with leading organizations such
+            as Dextroware Devices, Composite Regional Center, Madurai District
+            Disability Rehabilitation Office, NEO Motion, and TorchIT.
+          </p>
+          <p class="svc-text">
+            We conduct thorough assessments of individual student needs and
+            liaise with these manufacturers to ensure the provision of
+            appropriate assistive tools. Furthermore, we provide comprehensive
+            training to students on the effective utilization of these devices.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CTA -->
+    <div class="contact-bar">
+      <h2>Contact Us</h2>
+    </div>
+
+
+    <footer>
+      <strong
+        >The site is managed by Resource Education And Charitable Trust -
+        Madurai</strong
+      >
+    </footer>
+
+
+    <script>
+      const cards = document.querySelectorAll(".svc-card");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) entry.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.1 },
+      );
+      cards.forEach((c, i) => {
+        c.style.transitionDelay = `${i * 0.1}s`;
+        observer.observe(c);
+      });
+    </script>
+  </body>
+</html>
+
+

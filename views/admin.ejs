@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard - REACT</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana;
+            background: rgb(232, 234, 238);
+            margin: 0;
+        }
+
+        /* ===== Header / Navbar ===== */
+        header {
+           background:#ffffff;
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo{
+            font-size:1.5rem;
+            font-weight:bold;
+            color:#2c5aa0;
+        }
+
+        .nav-links {
+            margin-left: auto;
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a{
+            text-decoration:none;
+            color:#333;
+            font-weight:500;
+            font-size:16px;
+        }
+
+        .nav-links a:hover{
+            color:#2c5aa0;
+        }
+
+        /* ===== Dashboard Layout ===== */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        /* ===== Cards ===== */
+        .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: white;
+            text-align:left;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            
+        }
+
+        .card-icon{
+            width:60px;
+            height:60px;
+            background:linear-gradient(135deg,#667eea,#764ba2);
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:1.5rem;
+            color:white;
+            margin-bottom:15px;
+            }
+
+            .card-header{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            margin-bottom:10px;
+            }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .exit-btn{
+            padding:6px 14px;
+            background:linear-gradient(135deg,#667eea,#764ba2);
+            color:#ffffff;
+            text-decoration:none;
+            border-radius:6px;
+            font-size:14px;
+            font-weight:500;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:0.3s;
+            }
+
+        .exit-btn:hover{
+            background:linear-gradient(135deg,#5a6de0,#6a3fa0);
+            }
+        /* ===== Footer ===== */
+        footer {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #f2f4f7ff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            }
+
+            .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== Header ===== -->
+    <header>
+        <nav>
+
+        <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+
+        <ul class="nav-links">
+        <li><a href="/admin">Dashboard</a></li>
+        <li><a href="/admin_pwd_menu">PWD Users</a></li>
+        <li><a href="/admin/volunteers">Volunteers</a></li>
+        <li><a href="/admin_calendar">Events</a></li>
+
+        <li>
+        <a href="/logout" class="exit-btn">
+        Logout
+        </a>
+        </li>
+
+        </ul>
+
+        </nav>
+        </header>
+
+    <!-- Hero Section -->  
+        <section class="hero">
+            <h1>Admin Dashboard</h1>
+            <p>Manage PWD users, organize events, and oversee employer registrations
+                within the REACT platform.</p>
+        </section>
+
+    <!-- ===== Dashboard Content ===== -->
+    <div class="dashboard-container">
+
+        <div class="card-grid">
+
+            <div class="card">
+            <div class="card-header">
+            <div class="card-icon">♿</div>
+            <h3>PWD Management</h3>
+            </div>
+                <p>
+                    View, approve, update, or remove registered PWD users and
+                    monitor their profiles.
+                </p>
+                <a href="/admin_pwd_menu" class="btn">Manage PWD</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                <div class="card-icon">🤝</div>
+                <h3>Volunteers</h3>
+                </div>
+                 <p>
+                    View and manage volunteers who support REACT activities,
+                    monitor their profile and assign tasks
+                </p>
+                <a href="/admin/volunteers" class="btn">Manage Volunteers</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                <div class="card-icon">🏢</div>
+                <h3>Employers</h3>
+                </div>
+                <p>
+                    View and manage employer registrations and monitor
+                    job postings on the platform.
+                </p>
+                <a href="admin_employer_menu" class="btn">Manage Employers</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                <div class="card-icon">📅</div>
+                <h3>Events</h3>
+                </div>
+                <p>
+                    Create and manage upcoming programs, workshops,
+                    and community events.
+                </p>
+                <a href="/admin_calendar" class="btn">Manage Events</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                <div class="card-icon">💬</div>
+                <h3>Feedback</h3>
+                </div>
+                <p>
+                    View feedback submitted by users 
+                </p>
+                <a href="/admin/feedback" class="btn">View Feedback</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        © 2026 REACT | Admin Dashboard
+    </footer>
+
+</body>
+
+</html>

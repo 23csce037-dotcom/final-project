@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community Development – REACT</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #3f5fc0;
+        --blue-dark: #2d4aad;
+        --grad: linear-gradient(135deg, #4a6bd6 0%, #7b4fc9 100%);
+        --grad-hero: linear-gradient(135deg, #4a6bd6 0%, #9b59c9 100%);
+        --white: #ffffff;
+        --bg: #f8f9fc;
+        --text: #333344;
+        --text-muted: #666680;
+        --border: rgba(63, 95, 192, 0.1);
+      }
+
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+
+      body {
+        font-family: "Nunito Sans", "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 48px;
+        height: 64px;
+        box-shadow: 0 2px 12px rgba(63, 95, 192, 0.08);
+      }
+      .nav-logo {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--blue-dark);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 13.5px;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--blue);
+      }
+
+
+      /* HERO */
+      .hero {
+        min-height: 38vh;
+        background: var(--grad-hero);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        padding: 100px 48px 48px;
+        text-align: center;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 50% at 15% 25%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse 50% 60% at 85% 75%,
+            rgba(255, 255, 255, 0.06) 0%,
+            transparent 55%
+          );
+      }
+      .hero-grid-bg {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
+      .hero-eyebrow {
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 8px;
+        position: relative;
+        font-weight: 700;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 4vw, 48px);
+        font-weight: 800;
+        color: var(--white);
+        line-height: 1.1;
+        position: relative;
+      }
+      .hero-sub {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.9);
+        margin-top: 10px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        position: relative;
+      }
+
+
+      /* INTRO */
+      .intro {
+        background: var(--white);
+        padding: 40px 80px;
+        border-bottom: 1px solid var(--border);
+      }
+      .intro p {
+        max-width: 960px;
+        margin: 0 auto;
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--text);
+        font-weight: 400;
+      }
+
+
+      /* INITIATIVES */
+      .initiatives {
+        padding: 56px 80px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+
+      /* CARD ROW */
+      .init-card {
+        background: var(--white);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        overflow: hidden;
+        box-shadow: 0 2px 16px rgba(63, 95, 192, 0.07);
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s ease;
+      }
+      .init-card.reverse {
+        grid-template-columns: 1fr 200px;
+      }
+      .init-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+
+      /* SMALL IMAGE */
+      .init-img {
+        width: 200px;
+        flex-shrink: 0;
+        overflow: hidden;
+        position: relative;
+      }
+      .init-card.reverse .init-img {
+        order: 2;
+      }
+      .init-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+      }
+      .init-card:hover .init-img img {
+        transform: scale(1.05);
+      }
+
+
+      /* CONTENT */
+      .init-content {
+        padding: 32px 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .init-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .init-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--grad);
+        color: var(--white);
+        font-size: 12px;
+        font-weight: 800;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+      }
+      .init-title {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--blue-dark);
+      }
+      .init-divider {
+        width: 32px;
+        height: 3px;
+        border-radius: 2px;
+        background: var(--grad);
+      }
+      .init-text {
+        font-size: 14px;
+        line-height: 1.85;
+        color: var(--text);
+        font-weight: 400;
+      }
+      .list-label {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--blue-dark);
+      }
+      .item-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .item-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--text);
+      }
+      .item-list li .dot {
+        flex-shrink: 0;
+        margin-top: 7px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--grad);
+      }
+      .item-list li strong {
+        color: var(--blue-dark);
+      }
+      .arrow-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .arrow-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--text);
+      }
+      .arrow-list li::before {
+        content: "›";
+        color: var(--blue);
+        font-weight: 800;
+        font-size: 16px;
+        line-height: 1.3;
+        flex-shrink: 0;
+      }
+
+
+      /* CTA */
+      .contact-bar {
+        background: var(--grad);
+        text-align: center;
+        padding: 52px 48px;
+        position: relative;
+        overflow: hidden;
+      }
+      .contact-bar::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 60% 80% at 50% 50%,
+          rgba(255, 255, 255, 0.08) 0%,
+          transparent 70%
+        );
+      }
+      .contact-bar h2 {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--white);
+        margin-bottom: 10px;
+        position: relative;
+      }
+      .contact-bar p {
+        font-size: 14.5px;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 24px;
+        position: relative;
+      }
+      .cta-btn {
+        display: inline-block;
+        background: var(--white);
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 13px 36px;
+        border-radius: 40px;
+        position: relative;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+      }
+
+
+      footer {
+        background: var(--white);
+        text-align: center;
+        padding: 18px 48px;
+        font-size: 13px;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+      }
+      footer strong {
+        color: var(--blue-dark);
+        font-weight: 700;
+      }
+
+
+      @media (max-width: 860px) {
+        nav {
+          padding: 0 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .intro {
+          padding: 32px 24px;
+        }
+        .initiatives {
+          padding: 36px 20px;
+          gap: 24px;
+        }
+        .init-card,
+        .init-card.reverse {
+          grid-template-columns: 1fr;
+        }
+        .init-card.reverse .init-img {
+          order: 0;
+        }
+        .init-img {
+          width: 100%;
+          height: 180px;
+        }
+        .init-content {
+          padding: 24px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+        <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/programs">Programs</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/user">Events</a></li>
+        <li><a href="/register">Get Involved</a></li>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid-bg"></div>
+      <p class="hero-eyebrow">REACT — Madurai</p>
+      <h1>Community Development</h1>
+      <p class="hero-sub">Building a Stronger, More Inclusive Madurai</p>
+    </section>
+
+
+    <!-- INTRO -->
+    <div class="intro">
+      <p>
+        Our Community Development Programs are designed to strengthen the
+        support systems and foster greater inclusion for individuals with
+        disabilities across Madurai. We work with various stakeholders to build
+        capacity, raise awareness, and provide direct support. Our key
+        initiatives within this program include
+      </p>
+    </div>
+
+
+    <!-- INITIATIVES -->
+    <section class="initiatives">
+      <!-- 01 -->
+      <div class="init-card">
+        <div class="init-img">
+          <img
+            src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=400&q=80"
+            alt="Special School Support"
+          />
+        </div>
+        <div class="init-content">
+          <div class="init-header">
+            <div class="init-num">01</div>
+            <div class="init-title">Special School Support</div>
+          </div>
+          <div class="init-divider"></div>
+          <p class="init-text">
+            Recognizing the crucial role of special schools in the ecosystem,
+            our Community Development Program focuses on enhancing their
+            capacity to provide quality education and support to students with
+            disabilities in Madurai. We offer a comprehensive assessment and
+            improvement framework to elevate their service standards.
+          </p>
+          <div class="list-label">Our Assessment Process:</div>
+          <ul class="item-list">
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Physical Infrastructure:</strong> Evaluating the
+                accessibility and suitability of the school's physical
+                environment.
+              </div>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Curriculum:</strong> Reviewing the relevance and
+                adaptability of the educational content.
+              </div>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Method of Delivery:</strong> Analyzing the effectiveness
+                and inclusivity of teaching methodologies.
+              </div>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Staff Quality:</strong> Assessing the qualifications,
+                training, and support provided to educators and staff.
+              </div>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Administration Procedures:</strong> Examining the
+                efficiency and inclusivity of the school's operational
+                processes.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+      <!-- 02 -->
+      <div class="init-card reverse">
+        <div class="init-img">
+          <img
+            src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=80"
+            alt="School Improvement Solutions"
+          />
+        </div>
+        <div class="init-content">
+          <div class="init-header">
+            <div class="init-num">02</div>
+            <div class="init-title">School Improvement Solutions</div>
+          </div>
+          <div class="init-divider"></div>
+          <p class="init-text">
+            Following a thorough assessment, our specialized team provides
+            cost-effective and practical solutions tailored to the unique needs
+            of each special school, ultimately aiming to improve the overall
+            quality of education and support for students with disabilities in
+            Madurai.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- 03 -->
+      <div class="init-card">
+        <div class="init-img">
+          <img
+            src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80"
+            alt="Milestone Development Center"
+          />
+        </div>
+        <div class="init-content">
+          <div class="init-header">
+            <div class="init-num">03</div>
+            <div class="init-title">Milestone Development Center</div>
+          </div>
+          <div class="init-divider"></div>
+          <p class="init-text">
+            Our Milestone Development Center in Madurai offers specialized
+            therapy and academic support for children facing developmental
+            delays, including Autism Spectrum Disorder (ASD),
+            Attention-Deficit/Hyperactivity Disorder (ADHD), Intellectual
+            Disability (ID), and Multiple Disabilities. We believe in a holistic
+            approach that involves the active participation of parents in their
+            child's developmental journey.
+          </p>
+          <div class="list-label">Our Comprehensive Approach:</div>
+          <ul class="item-list">
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>360-Degree Assessment:</strong> Our experienced
+                counselors and therapists conduct a thorough evaluation of the
+                child, including detailed discussions with parents and
+                caregivers, and observation in familiar environments.
+              </div>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Individualized 12-Month Goal Sheet:</strong> Based on
+                the assessment, we create a personalized goal sheet focusing on
+                five key domains: Activities of Daily Living (ADL), Speech,
+                Sensory Processing, Social Interaction, and Academic skills.
+              </div>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Tailored Activity Sheets:</strong> We develop specific
+                activity sheets aligned with the individual goals, ensuring
+                daily engagement in individual, group, and cognitive activities
+                targeting a particular domain.
+              </div>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Monthly Progress Measurement:</strong> We meticulously
+                track the child's progress on a monthly basis to identify areas
+                of growth and potential challenges.
+              </div>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div>
+                <strong>Progress Report and Corrective Steps:</strong> Regular
+                reports are shared with parents, and collaborative discussions
+                lead to necessary adjustments and corrective steps to ensure
+                continuous development.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+      <!-- 04 -->
+      <div class="init-card reverse">
+        <div class="init-img">
+          <img
+            src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80"
+            alt="Disability Inclusion Webinars"
+          />
+        </div>
+        <div class="init-content">
+          <div class="init-header">
+            <div class="init-num">04</div>
+            <div class="init-title">Disability Inclusion Webinars</div>
+          </div>
+          <div class="init-divider"></div>
+          <p class="init-text">
+            As part of our commitment to building an inclusive Madurai
+            community, REACT conducts a monthly webinar series on disability
+            inclusion. These webinars aim to raise awareness, dispel
+            misconceptions, and empower individuals with disabilities and their
+            support networks.
+          </p>
+          <div class="list-label">
+            Key Topics Covered: Our webinars delve into various aspects of
+            disability, including:
+          </div>
+          <ul class="arrow-list">
+            <li>Strategies for leading an independent life.</li>
+            <li>
+              The importance and benefits of inclusion in all spheres of
+              society.
+            </li>
+            <li>The critical need for proper and accessible education.</li>
+            <li>
+              The advantages and support systems available through group living
+              arrangements.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CTA -->
+    <div class="contact-bar">
+      <h2>Ready to Make a Difference?</h2>
+      <p>
+        Join us in creating lasting change in our community. Let's work together
+        to build a more inclusive and accessible world for everyone.
+      </p>
+      <a href="#" class="cta-btn">GET INVOLVED</a>
+    </div>
+
+
+    <footer>
+      <strong
+        >The site is managed by Resource Education And Charitable Trust -
+        Madurai</strong
+      >
+    </footer>
+
+
+    <script>
+      const cards = document.querySelectorAll(".init-card");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.1 },
+      );
+      cards.forEach((c) => observer.observe(c));
+    </script>
+  </body>
+</html>

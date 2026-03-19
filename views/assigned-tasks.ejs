@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assigned Tasks - REACT</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background:#f4f6f9;
+}
+
+/* ================= HEADER ================= */
+
+header {
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c5aa0;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #2c5aa0;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: #333;
+  margin: 3px 0;
+}
+
+/* ================= HERO ================= */
+.hero {
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.3rem;
+  margin-bottom: 1rem;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* ================ TASK CARD ================= */
+.task-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 30px rgba(0,0,0,0.15);
+}
+
+.task-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: white;
+}
+
+.task-card h2 {
+  color: #2c5aa0;
+  margin-bottom: 1rem;
+}
+
+.task-card p {
+  color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.back-btn {
+  display: inline-block;
+  padding: 0.7rem 1.8rem;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  opacity: 0.9;
+}
+
+/* ================= FOOTER ================= */
+.main-footer {
+  background: #34495e;
+  color: #ffffff;
+  padding: 3rem 2rem 2rem;
+  margin-top: 4rem;
+}
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 1rem;
+  font-size: 0.9rem;
+}
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    padding: 2rem;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+}
+</style>
+</head>
+<body>
+<!-- ================= NAVBAR ================= -->
+<header>
+<nav>
+  <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/Volunteer">Dashboard</a></li>
+    <li><a href="/volunteer/events">Events</a></li>
+    <li><a href="/login">Logout</a></li>
+  </ul>
+  <div class="menu-toggle" id="menuToggle">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1>Assigned Tasks</h1>
+  <p>Stay updated with your volunteering responsibilities.</p>
+</section>
+
+<!-- ================= CONTENT ================= -->
+<div class="container">
+<% if(tasks.length > 0){ %>
+<% tasks.forEach(task => { %>
+<div class="task-card">
+<div class="task-icon">📝</div>
+<h2><%= task.taskTitle %></h2>
+<p><strong>Task Description:</strong><br>
+<%= task.taskDescription %></p>
+</div>
+<br>
+<% }) %>
+<% } else { %>
+<div class="task-card">
+<div class="task-icon">📝</div>
+<h2>No Tasks Assigned Yet</h2>
+<p>Please wait for the admin to assign a task.</p>
+<a href="/Volunteer" class="back-btn">Back to Dashboard</a>
+</div>
+<% } %>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="main-footer">
+  <div class="footer-bottom">
+    © 2024 Resource Education And Charitable Trust (REACT). All rights reserved.
+  </div>
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+</script>
+
+</body>
+</html>

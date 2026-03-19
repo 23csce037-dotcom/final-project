@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Volunteer Interview</title>
+
+
+<style>
+
+
+body{
+font-family:"Segoe UI";
+background:#f4f6f9;
+}
+
+
+.hero{
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+padding:3rem;
+text-align:center;
+}
+
+
+.container{
+max-width:700px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+
+label{
+font-weight:600;
+}
+
+
+input,textarea{
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+
+button{
+background:#667eea;
+color:white;
+padding:12px;
+border:none;
+width:100%;
+border-radius:6px;
+cursor:pointer;
+}
+
+
+.back-btn{
+display:inline-block;
+margin-top:15px;
+padding:10px 20px;
+background:#764ba2;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="hero">
+<h1>Volunteer Interview Application</h1>
+</div>
+
+
+<div class="container">
+
+
+<form action="/volunteer-interview" method="POST">
+
+
+<label>Full Name</label>
+<input type="text" name="fullName" required>
+
+
+<label>Email</label>
+<input type="email" name="email" required>
+
+
+<label>Phone Number</label>
+<input type="tel"
+name="phone"
+pattern="[0-9]{10}"
+maxlength="10"
+placeholder="Enter 10 digit phone number"
+required>
+
+
+<label>Age</label>
+<input type="number" name="age" min="18" max="60" required>
+
+
+<label>Skills</label>
+<input type="text" name="skills" placeholder="Example: Teaching, Organizing">
+
+
+<label>Why do you want to volunteer?</label>
+<textarea name="motivation" rows="4" required></textarea>
+
+
+<button type="submit">Submit Application</button>
+
+
+</form>
+
+
+<div style="text-align:center;">
+<a href="/volunteer/community" class="back-btn">Back</a>
+</div>
+
+
+</div>
+
+
+</body>
+</html>

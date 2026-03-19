@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Volunteer Profile</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <style>
+    body{
+      font-family: "Segoe UI", sans-serif;
+      background:#f4f6f9;
+    }
+
+
+    .container{
+      max-width:800px;
+      margin:40px auto;
+      background:white;
+      padding:30px;
+      border-radius:10px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    }
+
+
+    h2{
+      text-align:center;
+      margin-bottom:25px;
+    }
+
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
+
+
+    td{
+      padding:12px;
+    }
+
+
+    td:first-child{
+      font-weight:600;
+      width:35%;
+    }
+
+
+    input, select, textarea{
+      width:100%;
+      padding:8px;
+      border:1px solid #ccc;
+      border-radius:6px;
+    }
+
+
+    button{
+      margin-top:20px;
+      padding:12px 30px;
+      border:none;
+      background:linear-gradient(135deg,#667eea,#764ba2);
+      color:white;
+      border-radius:6px;
+      cursor:pointer;
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+    }
+  </style>
+</head>
+<body>
+
+
+<div class="container">
+  <h2>Update Volunteer Profile</h2>
+
+
+  <form id="updateForm">
+    <table>
+      <tr>
+        <td>Full Name</td>
+        <td><input type="text" id="fullName" required></td>
+      </tr>
+
+
+      <tr>
+        <td>Email</td>
+        <td><input type="email" id="email" required></td>
+      </tr>
+
+
+      <tr>
+        <td>Age</td>
+        <td><input type="number" id="age"></td>
+      </tr>
+
+
+      <tr>
+        <td>Date of Birth</td>
+        <td><input type="date" id="dob"></td>
+      </tr>
+
+
+      <tr>
+        <td>Gender</td>
+        <td>
+          <select id="gender">
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>Qualification</td>
+        <td><input type="text" id="qualification"></td>
+      </tr>
+
+
+      <tr>
+        <td>Previous Volunteer</td>
+        <td>
+          <select id="previousVolunteer">
+            <option value="">Select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>Volunteer Experience</td>
+        <td>
+          <textarea id="volunteerExperience" rows="4"></textarea>
+        </td>
+      </tr>
+    </table>
+
+
+    <button type="submit">Update Profile</button>
+  </form>
+</div>
+
+
+<script>
+
+
+// ✅ Load Profile
+window.onload = async function(){
+  try {
+    const res = await fetch("/profile/get-profile");
+    const data = await res.json();
+
+
+    if(data.success && data.profile){
+      document.getElementById("fullName").value = data.profile.fullName || "";
+      document.getElementById("email").value = data.profile.email || "";
+      document.getElementById("age").value = data.profile.age || "";
+      document.getElementById("dob").value = data.profile.dob
+        ? data.profile.dob.split("T")[0] : "";
+      document.getElementById("gender").value = data.profile.gender || "";
+      document.getElementById("qualification").value = data.profile.qualification || "";
+      document.getElementById("previousVolunteer").value = data.profile.previousVolunteer || "";
+      document.getElementById("volunteerExperience").value = data.profile.volunteerExperience || "";
+    }
+  } catch (err) {
+    alert("❌ Error loading profile");
+  }
+};
+
+
+// ✅ Update Profile
+document.getElementById("updateForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+
+  const updateData = {
+    fullName: document.getElementById("fullName").value,
+    email: document.getElementById("email").value,
+    age: document.getElementById("age").value,
+    dob: document.getElementById("dob").value,
+    gender: document.getElementById("gender").value,
+    qualification: document.getElementById("qualification").value,
+    previousVolunteer: document.getElementById("previousVolunteer").value,
+    volunteerExperience: document.getElementById("volunteerExperience").value
+  };
+
+
+  try {
+    const response = await fetch("/profile/update-profile", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(updateData)
+    });
+
+
+    const result = await response.json();
+
+
+    if(result.success){
+  alert("Profile updated successfully");
+window.location.href = "/volunteer/profile?updated=1";
+}
+  } catch (err) {
+    alert("❌ Server Error");
+  }
+});
+
+
+</script>
+
+
+</body>
+</html>

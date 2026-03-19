@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer profile</title>
+    <!-- Bootstrap 5 CSS -->
+     <link rel="stylesheet"
+ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+}
+
+/* Gradient Utilities */
+.bg-light-gradient {
+    background: #b4c7eeff;
+}
+
+.text-primary-gradient {
+    background:  white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #2575fc;
+}
+
+.profile-icon {
+    width: 32px;
+    height: 32px;
+    background-color: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6a11cb;
+}
+
+/* Welcome Card */
+.welcome-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    position: relative;
+}
+
+.decorative-circle {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+/* Dashboard Cards */
+.feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    background: #fff;
+    border-top: 4px solid transparent; /* Prepare for colored border */
+    overflow: hidden;
+}
+
+/* Individual Card Colors */
+.col-md-6:nth-child(1) .feature-card { border-color: #ffc107; } /* Primary */
+.col-md-6:nth-child(2) .feature-card { border-color: #0d6efd; } /* Success */
+.col-md-6:nth-child(3) .feature-card { border-color: #198754; } /* Info */
+.col-md-6:nth-child(4) .feature-card { border-color: #0dcaf0; } /* Warning */
+.col-md-6:nth-child(5) .feature-card { border-color: #dc3545; } /* Danger */
+
+.col-md-6:nth-child(1) .feature-card:hover { background: linear-gradient(to bottom, #fff, #fff9e6); }
+.col-md-6:nth-child(2) .feature-card:hover { background: linear-gradient(to bottom, #fff, #f0f4ff); }
+.col-md-6:nth-child(3) .feature-card:hover { background: linear-gradient(to bottom, #fff, #f0fff4); }
+.col-md-6:nth-child(4) .feature-card:hover { background: linear-gradient(to bottom, #fff, #f0faff); }
+.col-md-6:nth-child(5) .feature-card:hover { background: linear-gradient(to bottom, #fff, #fff0f0); }
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .icon-wrapper {
+    transform: scale(1.1);
+}
+
+.section-title {
+    position: relative;
+    display: inline-block;
+    color: #2c3e50;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    border-radius: 2px;
+}
+
+/* Footer */
+.footer {
+
+    background-color: #2c3e50;
+    font-size: 0.9rem;
+    color: white;
+    font-family: 14.4px poppins, sans-serif;
+    padding: 48px 0px 16px;
+}
+
+.footer h5 {
+    color: #fff;
+    font-weight: 600;
+}
+
+.footer a:hover {
+    color: #fff !important;
+    text-decoration: underline !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.col-md-6:nth-child(1) .feature-card { animation-delay: 0.1s; }
+.col-md-6:nth-child(2) .feature-card { animation-delay: 0.2s; }
+.col-md-6:nth-child(3) .feature-card { animation-delay: 0.3s; }
+.col-md-6:nth-child(4) .feature-card { animation-delay: 0.4s; }
+.col-md-6:nth-child(5) .feature-card { animation-delay: 0.5s; }
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-fill {
+    flex: 1;
+}
+ table {
+            width: 70%;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+
+        th {
+            background: #667eea;
+            color: white;
+            text-align: left;
+            width: 30%;
+        }
+
+
+        .profile-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background: #764ba2;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg shadow-sm sticky-top" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-uppercase d-flex align-items-center" href="#">
+    <img 
+        src="/images/logo.jpeg"
+        alt="REACT Logo"
+        style="height:45px; width:auto; margin-right:8px;"
+    >
+    <span style="color:white;">REACT</span>
+</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/employer" style="color: white;">Home</a>
+                     </li> 
+                   
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/login" style="color: white;">Logout</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                       <a href="/"
+                          class="btn btn-sm text-white d-flex align-items-center"
+                           style="background: rgba(255,255,255,0.2);
+                             backdrop-filter: blur(5px);
+                             border: 1px solid rgba(255,255,255,0.4);">
+                            <i class="bi bi-box-arrow-right me-2"></i> Exit
+                       </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-fill">
+
+
+        <h2 style="text-align:center;">My Profile Details</h2>
+
+
+        <table>
+            <tr>
+                <th>Full Name</th>
+                <td>
+                    <%= employer.name %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Age</th>
+                <td>
+                    <%= employer.age %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Company Name</th>
+                <td>
+                    <%= employer.companyname %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Company Email</th>
+                <td>
+                    <%= employer.companyemail %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Phone</th>
+                <td>
+                    <%= employer.phone %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Company Type </th>
+                <td>
+                    <%= employer.companytype %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Industry</th>
+                <td>
+                    <%= employer.domain %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Company Size</th>
+                <td>
+                    <%= employer.companysize %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Company Location</th>
+                <td>
+                    <%= employer.companylocation %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Official Website Link</th>
+                <td>
+                    <%= employer.website %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>Company Description</th>
+                <td>
+                    <%= employer.description %>
+                </td>
+            </tr>
+        </table>
+
+
+        <a href="/employer/profile" class="profile-btn">
+            Edit Profile
+        </a>
+        <a href="/employer" class="profile-btn">
+            Back
+        </a>
+
+</body>
+
+
+</html>

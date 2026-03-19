@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Admin Calendar</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f6fb;
+        color: #333;
+        min-height: 100vh;
+      }
+
+
+      /* ── NAVBAR ── */
+      header {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+      }
+
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c5aa0;
+      }
+
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        align-items: center;
+      }
+
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+
+      .nav-links a:hover {
+        color: #2c5aa0;
+      }
+
+
+      .nav-links .logout-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white !important;
+        padding: 0.45rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        transition:
+          box-shadow 0.3s,
+          transform 0.3s;
+      }
+
+
+      .nav-links .logout-btn:hover {
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        transform: translateY(-1px);
+      }
+
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+
+      .menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: #333;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+
+      /* ── PAGE HERO ── */
+      .page-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2.5rem 2rem;
+        text-align: center;
+      }
+
+
+      .page-hero h1 {
+        font-size: 2rem;
+        margin-bottom: 0.4rem;
+      }
+
+
+      .page-hero p {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+
+
+      /* ── CONTAINER ── */
+      .container {
+        max-width: 860px;
+        margin: 2.5rem auto;
+        padding: 0 1.5rem 3rem;
+      }
+
+
+      /* ── CARD ── */
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 2rem 2.5rem;
+        margin-bottom: 2rem;
+      }
+
+
+      .card-title {
+        color: #2c5aa0;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+
+      /* ── FORM ── */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+      }
+
+
+      .form-full {
+        grid-column: 1 / -1;
+      }
+
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+
+      .form-group label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+
+      .form-group input {
+        padding: 0.7rem 1rem;
+        border: 1.5px solid #e0e4ef;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        color: #333;
+        background: #f9fafb;
+        transition:
+          border-color 0.25s,
+          box-shadow 0.25s;
+        outline: none;
+      }
+
+
+      .form-group input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        background: #fff;
+      }
+
+
+      /* ── SUBMIT BUTTON ── */
+      #eventForm button[type="submit"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        transition:
+          box-shadow 0.3s,
+          transform 0.3s;
+      }
+
+
+      #eventForm button[type="submit"]:hover {
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        transform: translateY(-2px);
+      }
+
+
+      /* ── EVENTS LIST ── */
+      #eventList {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+      }
+
+
+      #eventList li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: #f4f6fb;
+        border-radius: 10px;
+        padding: 0.9rem 1.2rem;
+        border-left: 4px solid #667eea;
+        transition: box-shadow 0.2s;
+        flex-wrap: wrap;
+      }
+
+
+      #eventList li:hover {
+        box-shadow: 0 3px 12px rgba(102, 126, 234, 0.15);
+      }
+
+
+      #eventList li strong {
+        background: #2c5aa0;
+        color: white;
+        padding: 0.28rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+
+      .event-text {
+        flex: 1;
+        font-size: 0.93rem;
+        color: #333;
+      }
+
+
+      #eventList li button {
+        background: transparent;
+        color: #e74c3c;
+        border: 1.5px solid #e74c3c;
+        padding: 0.3rem 0.85rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+
+
+      #eventList li button:hover {
+        background: #e74c3c;
+        color: white;
+      }
+
+
+      .empty-state {
+        text-align: center;
+        color: #aaa;
+        padding: 2rem 0;
+        font-size: 0.93rem;
+      }
+
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: white;
+          flex-direction: column;
+          padding: 2rem;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          display: none;
+        }
+
+
+        .nav-links.active {
+          display: flex;
+        }
+
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+
+        .card {
+          padding: 1.5rem 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img
+            src="/images/logo.jpeg"
+            alt="REACT Logo"
+            style="
+              height: 45px;
+              width: auto;
+              vertical-align: middle;
+              margin-right: 0.4rem;
+            "
+          />REACT
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/admin">Dashboard</a></li>
+          <li><a href="/login" class="logout-btn">Logout</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="page-hero">
+      <h1>Admin Calendar</h1>
+      <p>Schedule and manage upcoming community events</p>
+    </section>
+
+
+    <!-- MAIN -->
+    <div class="container">
+      <!-- ADD EVENT FORM -->
+      <div class="card">
+        <div class="card-title">📅 Add New Event</div>
+        <form id="eventForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" required />
+            </div>
+            <div class="form-group">
+              <label for="title">Event Title</label>
+              <input
+                type="text"
+                id="title"
+                placeholder="Event Title"
+                required
+              />
+            </div>
+            <div class="form-group form-full">
+              <label for="description">Description</label>
+              <input type="text" id="description" placeholder="Description" />
+            </div>
+          </div>
+          <button type="submit">+ Add Event</button>
+        </form>
+      </div>
+
+
+      <!-- ALL EVENTS -->
+      <div class="card">
+        <div class="card-title">🗓️ All Events</div>
+        <ul id="eventList">
+          <li class="empty-state">Loading events…</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <script>
+      // Mobile nav
+      document.getElementById("menuToggle").addEventListener("click", () => {
+        document.getElementById("navLinks").classList.toggle("active");
+      });
+
+
+      async function loadEvents() {
+        const res = await fetch("/calendar/events");
+        const events = await res.json();
+        const list = document.getElementById("eventList");
+        list.innerHTML = "";
+        if (!events.length) {
+          list.innerHTML =
+            '<li class="empty-state">No events yet. Add one above!</li>';
+          return;
+        }
+        events.forEach((event) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${event.date}</strong>
+            <span class="event-text">${event.title}${event.description ? " — " + event.description : ""}</span>
+            <button onclick="deleteEvent('${event._id}')">Delete</button>
+          `;
+          list.appendChild(li);
+        });
+      }
+
+
+      async function deleteEvent(id) {
+        await fetch(`/calendar/delete/${id}`, {
+          method: "DELETE",
+        });
+        loadEvents();
+      }
+
+
+      document
+        .getElementById("eventForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const date = document.getElementById("date").value;
+          const title = document.getElementById("title").value;
+          const description = document.getElementById("description").value;
+          await fetch("/calendar/add", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ date, title, description }),
+          });
+          this.reset();
+          loadEvents();
+        });
+
+
+      loadEvents();
+    </script>
+  </body>
+</html>

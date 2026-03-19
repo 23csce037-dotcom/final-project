@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Candidate Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #dfe3ea;
+        }
+
+        /* Navbar */
+        .navbar-custom {
+            background: linear-gradient(90deg, #5f72bd, #9b23ea);
+        }
+
+        /* Table Styling */
+        .profile-table {
+            width: 85%;
+            margin: auto;
+            background: white;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .profile-table th {
+            background: #5f72bd;
+            color: white;
+            width: 30%;
+            padding: 14px;
+        }
+
+        .profile-table td {
+            background: #f1f1f1;
+            padding: 14px;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #5f72bd, #9b23ea);
+            color: white;
+            border: none;
+            padding: 8px 25px;
+            border-radius: 6px;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <h2 class="text-center mb-4">Candidate Profile Details</h2>
+
+    <table class="table table-bordered profile-table">
+
+        <tr>
+            <th>Name</th>
+            <td><%= profile.name %></td>
+        </tr>
+
+        <tr>
+            <th>Age</th>
+            <td><%= profile.age %></td>
+        </tr>
+
+        <tr>
+            <th>Disability</th>
+            <td><%= profile.disability %></td>
+        </tr>
+
+        <tr>
+            <th>Disability Percentage</th>
+            <td><%= profile.percentage %></td>
+        </tr>
+
+        <tr>
+            <th>Qualification</th>
+            <td><%= profile.qualification %></td>
+        </tr>
+
+        <tr>
+            <th>Location</th>
+            <td><%= profile.location %></td>
+        </tr>
+
+        <tr>
+            <th>Experience</th>
+            <td><%= resume ? resume.experience : "N/A" %></td>
+        </tr>
+
+        <tr>
+            <th>Skills</th>
+            <td>
+                <%= resume && resume.skills ? resume.skills.join(", ") : "N/A" %>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Resume</th>
+            <td>
+                <% if (resume && resume.resumeFile) { %>
+                    <a href="/uploads/<%= resume.resumeFile %>" target="_blank">
+                        View Resume
+                    </a>
+                <% } else { %>
+                    Not Uploaded
+                <% } %>
+            </td>
+        </tr>
+
+    </table>
+
+    <!-- Buttons -->
+    <div class="text-center">
+        <a href="/candidate-profile" class="btn">Back</a>
+    </div>
+
+</div>
+
+</body>
+</html>

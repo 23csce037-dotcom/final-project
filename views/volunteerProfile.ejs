@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Volunteer Profile - REACT</title>
+
+<style>
+body{
+font-family:"Segoe UI";
+background:#f4f6f9;
+margin:0;
+}
+
+header{
+background:linear-gradient(135deg,#667eea,#764ba2);
+padding:15px;
+color:white;
+}
+
+nav{
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.container{
+max-width:700px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:600;
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+margin-top:20px;
+width:100%;
+padding:12px;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+<div style="display:flex; align-items:center; gap:8px;">
+<img 
+src="/images/logo.jpeg"
+alt="REACT Logo"
+style="height:40px; width:auto;"
+>
+
+<h2 style="margin:0;">REACT</h2>
+</div>
+
+<a href="/volunteer" style="color:white;text-decoration:none;">Dashboard</a>
+
+</nav>
+</header>
+
+<div class="container">
+
+<h2>Volunteer Profile</h2>
+
+<form action="<%= profile ? '/profile/update-profile' : '/profile/save-profile' %>" method="POST">
+
+<label>Full Name</label>
+<input type="text" name="fullName" value="<%= profile ? profile.fullName : '' %>" required>
+
+<label>Email</label>
+<input type="email" name="email" value="<%= profile ? profile.email : '' %>" required>
+
+<label>Age</label>
+<input type="number" name="age" value="<%= profile ? profile.age : '' %>">
+
+<label>Date of Birth</label>
+<input type="date" name="dob" value="<%= profile && profile.dob ? profile.dob.toISOString().split('T')[0] : '' %>">
+
+<label>Gender</label>
+<select name="gender">
+<option value="">Select Gender</option>
+<option value="Male" <%= profile && profile.gender === 'Male' ? 'selected' : '' %>>Male</option>
+<option value="Female" <%= profile && profile.gender === 'Female' ? 'selected' : '' %>>Female</option>
+<option value="Other" <%= profile && profile.gender === 'Other' ? 'selected' : '' %>>Other</option>
+</select>
+
+<label>Qualification</label>
+<input type="text" name="qualification" value="<%= profile ? profile.qualification : '' %>">
+
+<label>Have you volunteered before?</label>
+
+<div style="margin-top:8px;">
+<input type="radio" name="previousVolunteer" value="Yes"
+onclick="toggleExperience()"
+<%= profile && profile.previousVolunteer === 'Yes' ? 'checked' : '' %>> Yes
+
+&nbsp;&nbsp;
+
+<input type="radio" name="previousVolunteer" value="No"
+onclick="toggleExperience()"
+<%= profile && profile.previousVolunteer === 'No' ? 'checked' : '' %>> No
+</div>
+
+<div id="experienceSection">
+
+<label>Volunteer Experience</label>
+<textarea name="volunteerExperience"><%= profile ? profile.volunteerExperience : '' %></textarea>
+
+</div>
+
+<button type="submit">Save Profile</button>
+
+</form>
+</div>
+<script>
+
+function toggleExperience(){
+
+const yesSelected = document.querySelector('input[name="previousVolunteer"][value="Yes"]').checked;
+const experienceSection = document.getElementById("experienceSection");
+
+if(yesSelected){
+experienceSection.style.display = "block";
+}else{
+experienceSection.style.display = "none";
+}
+
+}
+// Run when page loads (for edit mode)
+window.onload = toggleExperience;
+
+</script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Education Support Programs - REACT</title>
+<style>
+body{
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background:#f4f6f9;
+  margin:0;
+  color:#333;
+}
+
+/* HERO */
+.hero{
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  color:white;
+  padding:4rem 2rem;
+  text-align:center;
+}
+.hero h1{
+  font-size:2.5rem;
+}
+.hero p{
+  margin-top:0.5rem;
+  font-size:1.2rem;
+}
+
+/* Details Section */
+.details-section{
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.details-section h2{
+  color:#2c5aa0;
+  margin-bottom:1rem;
+}
+
+.details-section p{
+  font-size:1.1rem;
+  line-height:1.6;
+}
+
+/* Slider Styles */
+.slider-container{
+  position: relative;
+  max-width: 1000px;
+  margin: 3rem auto;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.slider-wrapper{
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slider-slide{
+  min-width: 100%;
+  position: relative;
+}
+
+.slider-slide img{
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.slide-caption{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+}
+
+/* Navigation Buttons */
+.slider-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color:white;
+  border:none;
+  font-size:2rem;
+  padding:0.5rem 1rem;
+  cursor:pointer;
+  border-radius: 5px;
+}
+.prev{ left: 10px; }
+.next{ right: 10px; }
+
+/* Back Button */
+.back-btn{
+  display:inline-block;
+  margin:2rem auto 4rem;
+  padding:0.7rem 1.5rem;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:white;
+  text-decoration:none;
+  border-radius:6px;
+  text-align:center;
+}
+
+/* FOOTER */
+.main-footer {
+  background: #34495e;
+  color: #ffffff;
+  padding: 3rem 2rem 2rem;
+  margin-top: 4rem;
+}
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 1rem;
+  font-size: 0.9rem;
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Education Support Programs</h1>
+  <p>Discover scholarships, mentorship, and learning initiatives for students</p>
+</section>
+
+<!-- Details Section About Education Programs -->
+<section class="details-section">
+  <h2>Our Education Support Initiatives</h2>
+  <p>
+    REACT focuses on empowering students through educational support programs. We provide scholarships, mentorship, and learning resources to help students achieve academic success.
+  </p>
+  <p>
+    Volunteers can assist in organizing scholarship drives, tutoring sessions, educational workshops, and career guidance seminars. By joining, you will directly contribute to students’ growth and academic opportunities.
+  </p>
+</section>
+
+<!-- Image Slider Section -->
+<section class="image-slider-section">
+  <div class="slider-container">
+    <div class="slider-wrapper" id="sliderWrapper">
+
+      <!-- Slide 1 -->
+      <div class="slider-slide">
+        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1200&q=80" alt="Scholarship Distribution" />
+        <div class="slide-caption">
+          <h3>Scholarship Distribution</h3>
+          <p>Participate in distributing scholarships to deserving students</p>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slider-slide">
+        <img src="https://images.unsplash.com/photo-1581090700227-240f5c6e4d87?auto=format&fit=crop&w=1200&q=80" alt="Educational Workshops" />
+        <div class="slide-caption">
+          <h3>Educational Workshops</h3>
+          <p>Assist in workshops to develop academic and life skills</p>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slider-slide">
+        <img src="https://images.unsplash.com/photo-1588072432836-2e1b22717f52?auto=format&fit=crop&w=1200&q=80" alt="Mentorship Programs" />
+        <div class="slide-caption">
+          <h3>Mentorship Programs</h3>
+          <p>Guide students through one-on-one or group mentorship sessions</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <button class="slider-btn prev" onclick="moveSlide(-1)">❮</button>
+    <button class="slider-btn next" onclick="moveSlide(1)">❯</button>
+  </div>
+
+  <!-- Back to Events Button -->
+  <div style="text-align:center;">
+  <a href="/Volunteer" class="back-btn">Back to Dashboard</a>
+</div>
+</section>
+
+<footer class="main-footer">
+  <div class="footer-bottom">
+    © 2024 Resource Education And Charitable Trust (REACT). All rights reserved.
+  </div>
+</footer>
+
+<script>
+let currentIndex = 0;
+const slides = document.querySelectorAll('.slider-slide');
+
+function showSlide(index){
+  if(index < 0) currentIndex = slides.length - 1;
+  else if(index >= slides.length) currentIndex = 0;
+  else currentIndex = index;
+
+  const wrapper = document.getElementById('sliderWrapper');
+  wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+function moveSlide(step){
+  showSlide(currentIndex + step);
+}
+// Initialize first slide
+showSlide(0);
+</script>
+
+</body>
+</html>
