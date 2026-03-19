@@ -198,7 +198,7 @@ router.get("/staffdash", async (req, res) => {
 });
 // ========== VOLUNTEER DASSHBOARD PAGE ===============
 router.get("/volunteer", (req, res) => {
-  res.render("volDash");
+  res.render("voldash");
 });
 
 // 👤 My Profile (Smart Route)
